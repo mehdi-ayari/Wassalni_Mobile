@@ -27,8 +27,9 @@ public class reservation {
 }
     
     private int id_res,user_id_chauffeur,user_id_client,id_colis;
-    private String destination,pointdepart,objet,type_reservation;
-    private Date date_reservation;
+    private String destination,pointdepart,objet,type_reservation,date_reservation;
+   
+    private float prix;
 //    private obj objet;
 //    private typres type_reservation;
 
@@ -37,7 +38,7 @@ public class reservation {
     
     
 
-    public reservation(int id_res, int user_id_chauffeur, int user_id_client, int id_colis, String destination, String pointdepart, Date date_reservation, String objet, String type_reservation) {
+    public reservation(int id_res, int user_id_chauffeur, int user_id_client, int id_colis, String destination, String pointdepart, String date_reservation, String objet, String type_reservation) {
         this.id_res = id_res;
         this.user_id_chauffeur = user_id_chauffeur;
         this.user_id_client = user_id_client;
@@ -49,7 +50,7 @@ public class reservation {
         this.type_reservation = type_reservation;
     }
 
-    public reservation(int user_id_chauffeur, int user_id_client, int id_colis, String destination, String pointdepart, Date date_reservation, String objet, String type_reservation) {
+    public reservation(int user_id_chauffeur, int user_id_client, int id_colis, String destination, String pointdepart, String date_reservation, String objet, String type_reservation) {
         this.user_id_chauffeur = user_id_chauffeur;
         this.user_id_client = user_id_client;
         this.id_colis = id_colis;
@@ -60,7 +61,7 @@ public class reservation {
         this.type_reservation = type_reservation;
     }
 
-    public reservation(String destination, String pointdepart, Date date_reservation, String objet, String type_reservation) {
+    public reservation(String destination, String pointdepart, String date_reservation, String objet, String type_reservation) {
         this.destination = destination;
         this.pointdepart = pointdepart;
         this.date_reservation = date_reservation;
@@ -68,6 +69,32 @@ public class reservation {
         this.type_reservation = type_reservation;
     }
 
+    public reservation(int user_id_chauffeur, int user_id_client, String destination, String pointdepart, String objet, String type_reservation, String date_reservation, float prix) {
+        this.user_id_chauffeur = user_id_chauffeur;
+        this.user_id_client = user_id_client;
+        this.destination = destination;
+        this.pointdepart = pointdepart;
+        this.objet = objet;
+        this.type_reservation = type_reservation;
+        this.date_reservation = date_reservation;
+        this.prix = prix;
+    }
+
+    public reservation(String destination) {
+        this.destination = destination;
+    }
+
+    public reservation(int user_id_chauffeur, int user_id_client, String destination, String pointdepart, String objet, String type_reservation, float prix) {
+        this.user_id_chauffeur = user_id_chauffeur;
+        this.user_id_client = user_id_client;
+        this.destination = destination;
+        this.pointdepart = pointdepart;
+        this.objet = objet;
+        this.type_reservation = type_reservation;
+        this.prix = prix;
+    }
+
+    
     
     
     
@@ -92,7 +119,7 @@ public class reservation {
         return destination;
     }
 
-    public Date getDate_reservation() {
+    public String getDate_reservation() {
         return date_reservation;
     }
 
@@ -106,6 +133,10 @@ public class reservation {
 
     public String getPointdepart() {
         return pointdepart;
+    }
+
+    public float getPrix() {
+        return prix;
     }
 
     
@@ -129,7 +160,7 @@ public class reservation {
         this.destination = destination;
     }
 
-    public void setDate_reservation(Date date_reservation) {
+    public void setDate_reservation(String date_reservation) {
         this.date_reservation = date_reservation;
     }
 
@@ -145,6 +176,11 @@ public class reservation {
         this.pointdepart = pointdepart;
     }
 
+    public void setPrix(float prix) {
+        this.prix = prix;
+    }
+
+    
     @Override
     public String toString() {
         return "reservation{" + "id_res=" + id_res + ", user_id_chauffeur=" + user_id_chauffeur + ", user_id_client=" + user_id_client + ", id_colis=" + id_colis + ", destination=" + destination + ", pointdepart=" + pointdepart + ", date_reservation=" + date_reservation + ", objet=" + objet + ", type_reservation=" + type_reservation + '}';

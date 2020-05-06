@@ -18,7 +18,7 @@ public class ListReservationForm extends Form {
 
     public ListReservationForm(Form previous) {
         
-        setTitle("List tasks");
+        setTitle("List Reservations");
         
         SpanLabel sp = new SpanLabel();
         sp.setText(ServiceReservation.getInstance().getAllReservations().toString());

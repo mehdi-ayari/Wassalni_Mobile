@@ -30,7 +30,7 @@ public class AddReservationForm extends Form {
 
     public AddReservationForm(Form previous) {
         
-        setTitle("Ajouter une Reserver");
+        setTitle("Ajouter une Reservation");
        setLayout(BoxLayout.y());
         
         TextField tfdestination = new TextField("","destination");
@@ -52,16 +52,18 @@ public class AddReservationForm extends Form {
                     Dialog.show("Alert", "Please fill all the fields", new Command("OK"));
                 else
                 {
-                    try {
-                        reservation r = new reservation(tfdestination.getText(),tfpointdepart.getText(),date
-                                ,objet(objet.getSelectedIndex()),typereservation(typereservation.getSelectedIndex()));
+                    
+                        reservation r = new reservation();
+                        r.setDestination(tfdestination.getText());
+                        r.setPointdepart(tfpointdepart.getText());
+                        r.setObjet(objet(objet.getSelectedIndex()));
+                        r.setType_reservation(typereservation(typereservation.getSelectedIndex()));
+                        r.setPrix(20);
                         if( ServiceReservation.getInstance().addResrvation(r))
                             Dialog.show("Success","Connection accepted",new Command("OK"));
                         else
                             Dialog.show("ERROR", "Server error", new Command("OK"));
-                    } catch (NumberFormatException e) {
-                        Dialog.show("ERROR", "Status must be a number", new Command("OK"));
-                    }
+                   
                     
                 }
                 
@@ -76,20 +78,20 @@ public class AddReservationForm extends Form {
     public String objet(int index)
     {
        
-        if (index==1) 
-        return "Passager";
+        if (index==0) 
+        return "passager";
         else
-            return "Colis";
+            return "colis";
      
     }
     
     public String typereservation(int index)
     {
      
-        if (index==1)
+        if (index==0)
             return "Taxi";
         else
-            if(index == 2)
+            if(index == 1)
                 return "Privée";
         else
                 return "camion";

@@ -43,8 +43,8 @@ public class ServiceReservation {
     
     public boolean addResrvation(reservation r)
     {
-        String url = Statics.BASE_URL + "/tasks/" + r.getDestination()+ "/" + r.getPointdepart()+"/"+r.getDate_reservation()
-                +"/"+r.getType_reservation()+"/"+r.getObjet()+"/"+r.getUser_id_client()+"/"+r.getUser_id_chauffeur()+"/"+r.getId_colis();
+        String url = Statics.BASE_URL + "/Reservation/ajouter?destination=" + r.getDestination()+ "&pointdepart=" + r.getPointdepart()+"&dateReservation="+r.getDate_reservation()
+                +"&typeReservation="+r.getType_reservation()+"&prix="+r.getPrix()+"&objet="+r.getObjet()+"&userClient="+r.getUser_id_client()+"&userChauffeur="+r.getUser_id_chauffeur();
         req.setUrl(url);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
