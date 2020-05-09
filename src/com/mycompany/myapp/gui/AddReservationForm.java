@@ -19,7 +19,10 @@ import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import com.mycompany.myapp.entities.reservation;
+import com.mycompany.myapp.entities.user;
 import com.mycompany.myapp.services.ServiceReservation;
+import com.mycompany.myapp.services.ServiceUser;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -27,7 +30,9 @@ import java.util.Date;
  * @author Mahdi
  */
 public class AddReservationForm extends Form {
-
+        
+    private ComboBox cmb;
+    ServiceUser seruser = new ServiceUser();
     public AddReservationForm(Form previous) {
         
         setTitle("Ajouter une Reservation");
@@ -42,6 +47,16 @@ public class AddReservationForm extends Form {
         DateFormat.MEDIUM);
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
+        
+        cmb = new ComboBox<>();
+        ArrayList<user> users = new ArrayList<>();
+        users.addAll(seruser.getAllUsers());
+
+        for (user object : users) {
+            String ch="CHAUFFEUR";
+            if(object.getRole_user().indexOf(ch)!=0)
+            cmb.addItem(object.getFirstName());
+        }
         
         Button btnValider = new Button("Add Reservation");
         
@@ -71,7 +86,7 @@ public class AddReservationForm extends Form {
             }
         });
         
-        addAll(tfdestination,tfpointdepart,typereservation,objet,btnValider);
+        addAll(tfdestination,tfpointdepart,typereservation,objet,cmb,btnValider);
         getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, e->previous.showBack());
     }
     

@@ -65,6 +65,7 @@ public class ServiceReservation {
             Map<String,Object> ReservationListJson = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
             
             List<Map<String,Object>> list = (List<Map<String,Object>>)ReservationListJson.get("root");
+            
             for(Map<String,Object> obj : list){
                 reservation r = new reservation();
                 float id = Float.parseFloat(obj.get("id").toString());
@@ -85,6 +86,7 @@ public class ServiceReservation {
         }
         return reservations;
     }
+    
     
     public ArrayList<reservation> getAllReservations(){
         String url = Statics.BASE_URL+"/Reservation/all";
