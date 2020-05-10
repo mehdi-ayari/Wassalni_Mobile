@@ -44,8 +44,9 @@ public class ServiceReservation {
     public boolean addResrvation(reservation r)
     {
         String url = Statics.BASE_URL + "/Reservation/ajouter?destination=" + r.getDestination()+ "&pointdepart=" + r.getPointdepart()+"&dateReservation="+r.getDate_reservation()
-                +"&typeReservation="+r.getType_reservation()+"&prix="+r.getPrix()+"&objet="+r.getObjet()+"&userClient="+r.getUser_id_client()+"&userChauffeur="+r.getUser_id_chauffeur();
+                +"&typeReservation="+r.getType_reservation()+"&prix="+r.getPrix()+"&objet="+r.getObjet()+"&userClient="+r.getUser_id_client()+"&userChauffeur="+r.getUser_id_chauffeur().getId();
         req.setUrl(url);
+        System.out.println(url);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
@@ -72,8 +73,7 @@ public class ServiceReservation {
                 r.setId_res((int)id);
                 r.setDestination(obj.get("destination").toString());
                 r.setPointdepart(obj.get("pointdepart").toString());
-                r.setUser_id_client((int)Float.parseFloat(obj.get("id").toString()));
-                r.setUser_id_chauffeur((int)Float.parseFloat(obj.get("id").toString()));
+                
 //                r.setId_colis((int)Float.parseFloat(obj.get("idColis").toString()));
                 r.setType_reservation(obj.get("typeReservation").toString());
                 r.setObjet(obj.get("objet").toString());

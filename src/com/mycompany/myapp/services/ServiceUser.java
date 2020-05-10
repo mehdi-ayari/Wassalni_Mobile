@@ -49,14 +49,22 @@ public class ServiceUser {
             List<Map<String,Object>> list = (List<Map<String,Object>>)userListJson.get("root");
             for(Map<String,Object> obj : list){
                 user u = new user();
-                
+                u.setId((int)Float.parseFloat(obj.get("id").toString()));
                 u.setFirstName(obj.get("nom").toString());
                 u.setLastName(obj.get("prenom").toString());
                 u.setEmail(obj.get("mail").toString());
                 u.setTelephone((int)Float.parseFloat(obj.get("telephone").toString()));
                 u.setAdresse(obj.get("adresse").toString());
-                u.setRole_user(obj.get("roles").toString());
+               
+//                Map<String, Object> role = (Map<String, Object>) obj.get("roles");
+//                String roles= role.toString();
+//                u.setRole_user(roles);
                 
+//                Map<String, Object> CategorieJson = (Map<String, Object>) obj.get("fkCategorie");
+//                Categorie c = new Categorie();
+//                float idc = Float.parseFloat(CategorieJson.get("idCategorie").toString());
+//                c.setId((int)idc);
+//                c.setNom(CategorieJson.get("nom").toString());
                 
                 users.add(u);
             }

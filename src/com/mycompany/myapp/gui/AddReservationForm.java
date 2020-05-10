@@ -50,13 +50,17 @@ public class AddReservationForm extends Form {
         
         cmb = new ComboBox<>();
         ArrayList<user> users = new ArrayList<>();
-        users.addAll(seruser.getAllUsers());
+        users.addAll(ServiceUser.getInstance().getAllUsers());
 
         for (user object : users) {
-            String ch="CHAUFFEUR";
-            if(object.getRole_user().indexOf(ch)!=0)
             cmb.addItem(object.getFirstName());
         }
+         cmb.addActionListener((evt) -> {
+            user c = users.get(cmb.getSelectedIndex());
+            System.out.println(c);
+            System.out.println(cmb.getSelectedItem());
+        });
+        
         
         Button btnValider = new Button("Add Reservation");
         
@@ -74,6 +78,8 @@ public class AddReservationForm extends Form {
                         r.setObjet(objet(objet.getSelectedIndex()));
                         r.setType_reservation(typereservation(typereservation.getSelectedIndex()));
                         r.setPrix(20);
+                        user c = users.get(cmb.getSelectedIndex());
+                        r.setUser_id_chauffeur(c);
                         if( ServiceReservation.getInstance().addResrvation(r))
                             Dialog.show("Success","Connection accepted",new Command("OK"));
                         else
