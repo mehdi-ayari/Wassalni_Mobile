@@ -47,7 +47,7 @@ public class AddReservationForm extends Form {
         DateFormat.MEDIUM);
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
-        
+       
         cmb = new ComboBox<>();
         ArrayList<user> users = new ArrayList<>();
         users.addAll(ServiceUser.getInstance().getAllUsers());

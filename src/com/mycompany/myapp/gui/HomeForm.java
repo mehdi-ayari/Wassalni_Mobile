@@ -22,12 +22,18 @@ public class HomeForm extends Form {
         setLayout(BoxLayout.y());
         
         add(new Label("Choose an option"));
-        Button btnAddTask = new Button("Add Reservation");
-        Button btnListTasks = new Button("List Reservations");
+        Button btnAddReservation = new Button("Add Reservation");
+        Button btnListReservation = new Button("List Reservations");
+        Button btnAddBusiness = new Button("Add Reservation Entreprise");
+        Button btnListBusiness = new Button("List Reservation Entreprise");
         
-        btnAddTask.addActionListener(e-> new AddReservationForm(current).show());
-        btnListTasks.addActionListener(e-> new ListReservationForm(current).show());
-        addAll(btnAddTask,btnListTasks);
+        
+        btnAddReservation.addActionListener(e-> new AddReservationForm(current).show());
+        btnListReservation.addActionListener(e-> new ListReservationForm(current).show());
+        btnAddBusiness.addActionListener(e-> new AddBusinessForm(current).show());
+        btnListBusiness.addActionListener(e-> new ListBusinessForm(current).show());
+       
+        addAll(btnAddReservation,btnListReservation,btnAddBusiness,btnListBusiness);
         
         
     }

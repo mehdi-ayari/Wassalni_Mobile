@@ -37,6 +37,10 @@ public class reservation_business {
         this.point_depart = point_depart;
     }
 
+    public reservation_business() {
+    }
+    
+
     public int getId_res_business() {
         return id_res_business;
     }
