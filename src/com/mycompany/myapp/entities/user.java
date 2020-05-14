@@ -12,6 +12,9 @@ package com.mycompany.myapp.entities;
 
 
 public class user {
+
+    public user() {
+    }
     public enum roleus {
   client,
   administrateur,
