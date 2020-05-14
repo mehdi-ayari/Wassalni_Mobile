@@ -11,8 +11,10 @@ import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
+import com.mycompany.myapp.entities.colis;
 import java.util.ArrayList;
 import com.mycompany.myapp.entities.reservation;
+import com.mycompany.myapp.entities.user;
 import com.mycompany.myapp.utils.Statics;
 import java.io.IOException;
 import java.util.List;
@@ -41,10 +43,11 @@ public class ServiceReservation {
         return instance;
     }
     
-    public boolean addResrvation(reservation r)
+    public boolean addResrvation(reservation r,colis c)
     {
-        String url = Statics.BASE_URL + "/Reservation/ajouter?destination=" + r.getDestination()+ "&pointdepart=" + r.getPointdepart()+"&dateReservation="+r.getDate_reservation()
-                +"&typeReservation="+r.getType_reservation()+"&prix="+r.getPrix()+"&objet="+r.getObjet()+"&userClient="+r.getUser_id_client()+"&userChauffeur="+r.getUser_id_chauffeur().getId();
+        String url = Statics.BASE_URL + "/Reservation/ajouter?destination=" + r.getDestination()+ "&pointdepart=" + r.getPointdepart()
+                +"&typeReservation="+r.getType_reservation()+"&prix="+r.getPrix()+"&objet="+r.getObjet()+"&userClient="+r.getUser_id_client()
+                +"&userChauffeur="+r.getUser_id_chauffeur().getId()+"&contenu="+c.getContenu()+"&poids="+c.getPoids();
         req.setUrl(url);
         System.out.println(url);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -68,12 +71,29 @@ public class ServiceReservation {
             List<Map<String,Object>> list = (List<Map<String,Object>>)ReservationListJson.get("root");
             
             for(Map<String,Object> obj : list){
+                Map<String, Object> chauffeurJson = (Map<String, Object>) obj.get("userChauffeur");
+                user u = new user();
+                
+                float idc = Float.parseFloat(chauffeurJson.get("id").toString());
+                u.setId((int)idc);
+                u.setFirstName(chauffeurJson.get("prenom").toString());
+                u.setLastName(chauffeurJson.get("nom").toString());
+                
+                Map<String, Object> colisJson = (Map<String, Object>) obj.get("idColis");
+                colis c = new colis();
+                
+//                float idco = Float.parseFloat(chauffeurJson.get("idColis").toString());
+//                c.setId_colis((int)idco);
+//                c.setContenu(chauffeurJson.get("contenu").toString());
+//                c.setPoids(Float.valueOf(chauffeurJson.get("poids").toString()));
+//                
                 reservation r = new reservation();
                 float id = Float.parseFloat(obj.get("id").toString());
                 r.setId_res((int)id);
                 r.setDestination(obj.get("destination").toString());
                 r.setPointdepart(obj.get("pointdepart").toString());
-                
+                r.setUser_id_chauffeur(u);
+//                r.setId_colis(c);
 //                r.setId_colis((int)Float.parseFloat(obj.get("idColis").toString()));
                 r.setType_reservation(obj.get("typeReservation").toString());
                 r.setObjet(obj.get("objet").toString());

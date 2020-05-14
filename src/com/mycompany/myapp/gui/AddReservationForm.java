@@ -18,6 +18,7 @@ import com.codename1.ui.TextField;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
+import com.mycompany.myapp.entities.colis;
 import com.mycompany.myapp.entities.reservation;
 import com.mycompany.myapp.entities.user;
 import com.mycompany.myapp.services.ServiceReservation;
@@ -30,16 +31,11 @@ import java.util.Date;
  * @author Mahdi
  */
 public class AddReservationForm extends Form {
-        
-    private ComboBox cmb;
-    ServiceUser seruser = new ServiceUser();
-    public AddReservationForm(Form previous) {
-        
-        setTitle("Ajouter une Reservation");
-       setLayout(BoxLayout.y());
-        
         TextField tfdestination = new TextField("","destination");
         TextField tfpointdepart = new TextField("","pointdepart");
+        TextField tfcontenu = new TextField("","contenu");
+        TextField tfpoids = new TextField("","poids");
+        
         ComboBox typereservation = new ComboBox("Taxi","Privée","camion");
         ComboBox objet=new ComboBox("Passager","Colis");
         DateFormat mediumDateFormat = DateFormat.getDateTimeInstance(
@@ -47,8 +43,16 @@ public class AddReservationForm extends Form {
         DateFormat.MEDIUM);
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
+        Button btnValider = new Button("Add Reservation");
        
-        cmb = new ComboBox<>();
+    private ComboBox cmb;
+    ServiceUser seruser = new ServiceUser();
+    public AddReservationForm(Form previous) {
+        
+        setTitle("Ajouter une Reservation");
+       setLayout(BoxLayout.y());
+        
+         cmb = new ComboBox<>();
         ArrayList<user> users = new ArrayList<>();
         users.addAll(ServiceUser.getInstance().getAllUsers());
 
@@ -61,8 +65,24 @@ public class AddReservationForm extends Form {
             System.out.println(cmb.getSelectedItem());
         });
         
-        
-        Button btnValider = new Button("Add Reservation");
+        tfcontenu.setVisible(false);
+        tfpoids.setVisible(false);
+        objet.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                String s = objet(objet.getSelectedIndex());
+                if(s=="colis")
+                {
+                  tfcontenu.setVisible(true);
+                  tfpoids.setVisible(true);
+                }
+                else
+                {
+                tfcontenu.setVisible(false);
+                tfpoids.setVisible(false);
+                }
+            }
+        });
         
         btnValider.addActionListener(new ActionListener() {
             @Override
@@ -73,14 +93,21 @@ public class AddReservationForm extends Form {
                 {
                     
                         reservation r = new reservation();
+                        colis coli = new colis();
                         r.setDestination(tfdestination.getText());
                         r.setPointdepart(tfpointdepart.getText());
                         r.setObjet(objet(objet.getSelectedIndex()));
                         r.setType_reservation(typereservation(typereservation.getSelectedIndex()));
                         r.setPrix(20);
+                        if(tfcontenu.getText()!="" || tfpoids.getText()!="")
+                        {
+                        coli.setContenu(tfcontenu.getText());
+                        coli.setPoids(Float.valueOf(tfpoids.getText()));
+                        }
                         user c = users.get(cmb.getSelectedIndex());
                         r.setUser_id_chauffeur(c);
-                        if( ServiceReservation.getInstance().addResrvation(r))
+                        
+                        if( ServiceReservation.getInstance().addResrvation(r,coli))
                             Dialog.show("Success","Connection accepted",new Command("OK"));
                         else
                             Dialog.show("ERROR", "Server error", new Command("OK"));
@@ -92,7 +119,10 @@ public class AddReservationForm extends Form {
             }
         });
         
-        addAll(tfdestination,tfpointdepart,typereservation,objet,cmb,btnValider);
+        
+        
+        this.addAll(tfdestination,tfpointdepart,objet,typereservation,cmb,tfcontenu,tfpoids,btnValider);
+
         getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, e->previous.showBack());
     }
     

@@ -26,9 +26,11 @@ public class reservation {
   passager;
 }
     
-    private int id_res,id_colis;
-    private String destination,pointdepart,objet,type_reservation,date_reservation;
+    private int id_res;
+    private String destination,pointdepart,objet,type_reservation;
     private user user_id_chauffeur,user_id_client;
+    private Date date_reservation;
+    private colis id_colis;
    
     private float prix;
 //    private obj objet;
@@ -42,7 +44,7 @@ public class reservation {
     
     
 
-    public reservation(String destination, String pointdepart, String date_reservation, String objet, String type_reservation) {
+    public reservation(String destination, String pointdepart, Date date_reservation, String objet, String type_reservation) {
         this.destination = destination;
         this.pointdepart = pointdepart;
         this.date_reservation = date_reservation;
@@ -72,7 +74,7 @@ public class reservation {
         return user_id_client;
     }
 
-    public int getId_colis() {
+    public colis getId_colis() {
         return id_colis;
     }
 
@@ -80,7 +82,7 @@ public class reservation {
         return destination;
     }
 
-    public String getDate_reservation() {
+    public Date getDate_reservation() {
         return date_reservation;
     }
 
@@ -113,7 +115,7 @@ public class reservation {
         this.user_id_client = user_id_client;
     }
 
-    public void setId_colis(int id_colis) {
+    public void setId_colis(colis id_colis) {
         this.id_colis = id_colis;
     }
 
@@ -121,7 +123,7 @@ public class reservation {
         this.destination = destination;
     }
 
-    public void setDate_reservation(String date_reservation) {
+    public void setDate_reservation(Date date_reservation) {
         this.date_reservation = date_reservation;
     }
 

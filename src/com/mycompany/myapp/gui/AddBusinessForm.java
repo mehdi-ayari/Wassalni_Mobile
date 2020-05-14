@@ -8,6 +8,7 @@ package com.mycompany.myapp.gui;
 
 import com.codename1.l10n.DateFormat;
 import com.codename1.l10n.DateFormatPatterns;
+import com.codename1.l10n.ParseException;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Button;
 import com.codename1.ui.Command;
@@ -23,6 +24,7 @@ import com.codename1.ui.spinner.Picker;
 import com.mycompany.myapp.entities.reservation_business;
 import com.mycompany.myapp.services.ServiceBusiness;
 import java.util.Date;
+
 
 /**
  *
@@ -56,8 +58,16 @@ public class AddBusinessForm extends Form {
                         b.setPoint_depart(tfpointdepart.getText());
                         b.setNom_client_entreprise(tfnomclient.getText());
                         b.setPrenon_client_entreprise(tfprenomclient.getText());
-                        SimpleDateFormat d=datedepart.getFormatter();
-                        b.setDate_depart(d);
+                        String d = datedepart.getDate().toString();
+                        String dd = d.substring(4,d.length());
+                        SimpleDateFormat formatter = new SimpleDateFormat();
+                        Date s = null;
+                   try {
+                       s = formatter.parse(dd);
+                   } catch (ParseException ex) {
+                       System.out.println("erreur");
+                   }
+                        b.setDate_depart(s);
                         if( ServiceBusiness.getInstance().addResrvation(b))
                             Dialog.show("Success","Connection accepted",new Command("OK"));
                         else
