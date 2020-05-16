@@ -70,16 +70,24 @@ public class ServiceBusiness {
             List<Map<String,Object>> list = (List<Map<String,Object>>)BusinessListJson.get("root");
             
             for(Map<String,Object> obj : list){
+                
+                Map<String, Object> dateres = (Map<String, Object>) obj.get("dateReservation");
+                Map<String, Object> datedepart = (Map<String, Object>) obj.get("dateDepart");
+
+                float datereservation = Float.parseFloat(dateres.get("timestamp").toString());
+                Date datere = new Date((long) datereservation * 1000);
+                float datede = Float.parseFloat(datedepart.get("timestamp").toString());
+                Date datedepa = new Date((long) datereservation * 1000);
+                
                 reservation_business b = new reservation_business();
                 float id = Float.parseFloat(obj.get("idResBusiness").toString());
                 b.setId_res_business((int)id);
                 b.setDestination(obj.get("destination").toString());
                 b.setPoint_depart(obj.get("pointDepart").toString());
-                
-//                r.setId_colis((int)Float.parseFloat(obj.get("idColis").toString()));
                 b.setNom_client_entreprise(obj.get("nomClientEntreprise").toString());
                 b.setPrenon_client_entreprise(obj.get("prenonClientEntreprise").toString());
-//                b.setDate_depart((Date) obj.get("dateDepart"));
+                b.setDate_reservation(datere);
+                b.setDate_depart(datedepa);
                 business.add(b);
             }
             

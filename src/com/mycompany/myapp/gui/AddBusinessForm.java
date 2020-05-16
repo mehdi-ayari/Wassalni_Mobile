@@ -52,22 +52,27 @@ public class AddBusinessForm extends Form {
                     Dialog.show("Alert", "Please fill all the fields", new Command("OK"));
                 else
                 {
+                    reservation_business b = new reservation_business();
                     
-                        reservation_business b = new reservation_business();
+                    
+                        String datedep = datedepart.getDate().toString();
+                        SimpleDateFormat formater = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                        String datedepa = formater.format(datedep);
+                        Date datedepart;
+                   try {
+                       datedepart = new SimpleDateFormat("yy/MM/dd HH:mm:ss").parse(datedepa);
+                       b.setDate_depart(datedepart);
+                   } catch (ParseException ex) {
+                       System.out.println("date");
+                   }
+                        
+                        
                         b.setDestination(tfdestination.getText());
                         b.setPoint_depart(tfpointdepart.getText());
                         b.setNom_client_entreprise(tfnomclient.getText());
                         b.setPrenon_client_entreprise(tfprenomclient.getText());
-                        String d = datedepart.getDate().toString();
-                        String dd = d.substring(4,d.length());
-                        SimpleDateFormat formatter = new SimpleDateFormat();
-                        Date s = null;
-                   try {
-                       s = formatter.parse(dd);
-                   } catch (ParseException ex) {
-                       System.out.println("erreur");
-                   }
-                        b.setDate_depart(s);
+                        
+
                         if( ServiceBusiness.getInstance().addResrvation(b))
                             Dialog.show("Success","Connection accepted",new Command("OK"));
                         else

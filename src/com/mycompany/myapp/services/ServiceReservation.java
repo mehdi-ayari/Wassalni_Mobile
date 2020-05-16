@@ -10,6 +10,7 @@ import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
+import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.events.ActionListener;
 import com.mycompany.myapp.entities.colis;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import com.mycompany.myapp.entities.reservation;
 import com.mycompany.myapp.entities.user;
 import com.mycompany.myapp.utils.Statics;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -71,7 +73,16 @@ public class ServiceReservation {
             List<Map<String,Object>> list = (List<Map<String,Object>>)ReservationListJson.get("root");
             
             for(Map<String,Object> obj : list){
+                
                 Map<String, Object> chauffeurJson = (Map<String, Object>) obj.get("userChauffeur");
+                Map<String, Object> colisJson = (Map<String, Object>) obj.get("idColis");
+                Map<String, Object> date = (Map<String, Object>) obj.get("dateReservation");
+                
+                float dateres = Float.parseFloat(date.get("timestamp").toString());
+                Date datereservation = new Date((long) dateres * 1000);
+                
+                
+                reservation r = new reservation();
                 user u = new user();
                 
                 float idc = Float.parseFloat(chauffeurJson.get("id").toString());
@@ -79,24 +90,34 @@ public class ServiceReservation {
                 u.setFirstName(chauffeurJson.get("prenom").toString());
                 u.setLastName(chauffeurJson.get("nom").toString());
                 
-                Map<String, Object> colisJson = (Map<String, Object>) obj.get("idColis");
-                colis c = new colis();
                 
-//                float idco = Float.parseFloat(chauffeurJson.get("idColis").toString());
-//                c.setId_colis((int)idco);
-//                c.setContenu(chauffeurJson.get("contenu").toString());
-//                c.setPoids(Float.valueOf(chauffeurJson.get("poids").toString()));
-//                
-                reservation r = new reservation();
+                
                 float id = Float.parseFloat(obj.get("id").toString());
                 r.setId_res((int)id);
                 r.setDestination(obj.get("destination").toString());
                 r.setPointdepart(obj.get("pointdepart").toString());
                 r.setUser_id_chauffeur(u);
-//                r.setId_colis(c);
-//                r.setId_colis((int)Float.parseFloat(obj.get("idColis").toString()));
+                r.setPrix(Float.valueOf(obj.get("prix").toString()));
                 r.setType_reservation(obj.get("typeReservation").toString());
                 r.setObjet(obj.get("objet").toString());
+                r.setDate_reservation(datereservation);
+                if(obj.get("objet").toString()=="colis")
+                {
+                colis c = new colis();
+                float idcoli = Float.parseFloat(colisJson.get("idColis").toString());
+                c.setId_colis((int)idcoli);
+                c.setContenu(colisJson.get("contenu").toString());
+                c.setPoids(Float.valueOf(colisJson.get("poids").toString()));
+                r.setId_colis(c);
+                }
+                else
+                {
+                colis c = new colis();
+                c.setId_colis(0);
+                c.setContenu("0");
+                c.setPoids(0);
+                r.setId_colis(c);
+                }
                 reservations.add(r);
             }
             
