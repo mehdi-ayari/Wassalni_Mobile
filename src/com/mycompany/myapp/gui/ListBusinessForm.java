@@ -8,10 +8,14 @@ package com.mycompany.myapp.gui;
 import com.codename1.components.SpanLabel;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Button;
+import com.codename1.ui.Command;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Label;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import com.mycompany.myapp.entities.reservation_business;
 import com.mycompany.myapp.services.ServiceBusiness;
@@ -55,7 +59,16 @@ public class ListBusinessForm extends Form {
         
         add(C1);
         
-       
+        supprimer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                ServiceBusiness.getInstance().DeleteResrvation(r.getId_res_business());
+                                Dialog.show("Success","Reservation supprimer",new Command("OK"));
+
+                ListBusinessForm f = new ListBusinessForm(previous);
+                f.showBack();
+            }
+        });
         getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, e-> previous.showBack());
         
     

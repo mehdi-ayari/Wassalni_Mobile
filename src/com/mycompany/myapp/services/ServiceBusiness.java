@@ -10,6 +10,7 @@ import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
+import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.events.ActionListener;
 import com.mycompany.myapp.entities.reservation_business;
 import com.mycompany.myapp.utils.Statics;
@@ -73,11 +74,15 @@ public class ServiceBusiness {
                 
                 Map<String, Object> dateres = (Map<String, Object>) obj.get("dateReservation");
                 Map<String, Object> datedepart = (Map<String, Object>) obj.get("dateDepart");
-
+                SimpleDateFormat formater = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                
+                
                 float datereservation = Float.parseFloat(dateres.get("timestamp").toString());
                 Date datere = new Date((long) datereservation * 1000);
                 float datede = Float.parseFloat(datedepart.get("timestamp").toString());
-                Date datedepa = new Date((long) datereservation * 1000);
+                Date datedepa = new Date((long) datede * 1000);
+                String datedep = formater.format(datedepa);
+                
                 
                 reservation_business b = new reservation_business();
                 float id = Float.parseFloat(obj.get("idResBusiness").toString());
@@ -87,7 +92,7 @@ public class ServiceBusiness {
                 b.setNom_client_entreprise(obj.get("nomClientEntreprise").toString());
                 b.setPrenon_client_entreprise(obj.get("prenonClientEntreprise").toString());
                 b.setDate_reservation(datere);
-                b.setDate_depart(datedepa);
+                b.setDate_depart(datedep);
                 business.add(b);
             }
             
@@ -112,6 +117,23 @@ public class ServiceBusiness {
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
         return business;
+    }
+    
+     public boolean DeleteResrvation(int i)
+    {
+        String url = Statics.BASE_URL + "/Reservation/supprimerbusiness?idResBusiness=" + i;
+        req.setUrl(url);
+        System.out.println(url);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                req.removeResponseListener(this);
+            }
+        });
+     
+     NetworkManager.getInstance().addToQueueAndWait(req);
+     return resultOK;
     }
     
 }

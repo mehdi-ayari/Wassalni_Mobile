@@ -75,7 +75,6 @@ public class ServiceReservation {
             for(Map<String,Object> obj : list){
                 
                 Map<String, Object> chauffeurJson = (Map<String, Object>) obj.get("userChauffeur");
-                Map<String, Object> colisJson = (Map<String, Object>) obj.get("idColis");
                 Map<String, Object> date = (Map<String, Object>) obj.get("dateReservation");
                 
                 float dateres = Float.parseFloat(date.get("timestamp").toString());
@@ -103,6 +102,7 @@ public class ServiceReservation {
                 r.setDate_reservation(datereservation);
                 if(obj.get("objet").toString()=="colis")
                 {
+                Map<String, Object> colisJson = (Map<String, Object>) obj.get("idColis");
                 colis c = new colis();
                 float idcoli = Float.parseFloat(colisJson.get("idColis").toString());
                 c.setId_colis((int)idcoli);
@@ -110,14 +110,14 @@ public class ServiceReservation {
                 c.setPoids(Float.valueOf(colisJson.get("poids").toString()));
                 r.setId_colis(c);
                 }
-                else
-                {
-                colis c = new colis();
-                c.setId_colis(0);
-                c.setContenu("0");
-                c.setPoids(0);
-                r.setId_colis(c);
-                }
+//                else
+//                {
+//                colis c = new colis();
+//                c.setId_colis(0);
+//                c.setContenu("0");
+//                c.setPoids(0);
+//                r.setId_colis(c);
+//                }
                 reservations.add(r);
             }
             
@@ -142,6 +142,24 @@ public class ServiceReservation {
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
         return reservations;
+    }
+    
+    
+    public boolean DeleteResrvation(int i)
+    {
+        String url = Statics.BASE_URL + "/Reservation/supprimerreservation?id=" + i;
+        req.setUrl(url);
+        System.out.println(url);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                req.removeResponseListener(this);
+            }
+        });
+     
+     NetworkManager.getInstance().addToQueueAndWait(req);
+     return resultOK;
     }
     
 }

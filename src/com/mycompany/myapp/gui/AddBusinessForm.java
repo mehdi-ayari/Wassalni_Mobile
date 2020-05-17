@@ -16,6 +16,7 @@ import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
+import com.codename1.ui.Label;
 import com.codename1.ui.TextField;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
@@ -41,6 +42,7 @@ public class AddBusinessForm extends Form {
         TextField tfpointdepart = new TextField("","Point Depart");
         TextField tfnomclient = new TextField("","Nom Client");
         TextField tfprenomclient = new TextField("","Prenom Client");
+        Label test;
         Picker datedepart = new Picker();
         Button btvalider = new Button("Reserver");
         datedepart.setType(Display.PICKER_TYPE_DATE_AND_TIME);
@@ -55,23 +57,19 @@ public class AddBusinessForm extends Form {
                     reservation_business b = new reservation_business();
                     
                     
-                        String datedep = datedepart.getDate().toString();
-                        SimpleDateFormat formater = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                        String datedepa = formater.format(datedep);
-                        Date datedepart;
-                   try {
-                       datedepart = new SimpleDateFormat("yy/MM/dd HH:mm:ss").parse(datedepa);
-                       b.setDate_depart(datedepart);
-                   } catch (ParseException ex) {
-                       System.out.println("date");
-                   }
+                        Date datedept = datedepart.getDate();
+                        System.out.println(datedept);
+                        SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        String datedepar = formater.format(datedept);
+                        System.out.println(datedepar);
                         
                         
+                        b.setDate_depart(datedepar);
                         b.setDestination(tfdestination.getText());
                         b.setPoint_depart(tfpointdepart.getText());
                         b.setNom_client_entreprise(tfnomclient.getText());
                         b.setPrenon_client_entreprise(tfprenomclient.getText());
-                        
+                        b.setEtat(0);
 
                         if( ServiceBusiness.getInstance().addResrvation(b))
                             Dialog.show("Success","Connection accepted",new Command("OK"));
