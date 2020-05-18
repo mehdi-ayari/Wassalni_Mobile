@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.myapp.services;
+package com.mycompany.myapp.services.Reservation;
 
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
@@ -134,6 +134,23 @@ public class ServiceBusiness {
      
      NetworkManager.getInstance().addToQueueAndWait(req);
      return resultOK;
+    }
+     
+     public void modifierReservation(reservation_business b) {
+
+        String Url = Statics.BASE_URL + "/Reservation/modifierbus?idResBusiness=" + b.getId_res_business() + "&destination="+b.getDestination()+ "&pointDepart=" + b.getPoint_depart()+"&dateDepart="+b.getDate_depart()
+                +"&prenonClientEntreprise="+b.getPrenon_client_entreprise()+"&nomClientEntreprise="+b.getNom_client_entreprise(); 
+        req.setUrl(Url);
+             System.out.println(Url);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                 resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                req.removeResponseListener(this);
+            }
+        });
+ 
+        NetworkManager.getInstance().addToQueueAndWait(req);
     }
     
 }

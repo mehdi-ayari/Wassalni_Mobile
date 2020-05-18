@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.myapp.services;
+package com.mycompany.myapp.services.Reservation;
 
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
@@ -100,24 +100,25 @@ public class ServiceReservation {
                 r.setType_reservation(obj.get("typeReservation").toString());
                 r.setObjet(obj.get("objet").toString());
                 r.setDate_reservation(datereservation);
+                
+                Map<String, Object> colisJson = (Map<String, Object>) obj.get("idColis");
+
+                colis c = new colis();
                 if(obj.get("objet").toString()=="colis")
                 {
-                Map<String, Object> colisJson = (Map<String, Object>) obj.get("idColis");
-                colis c = new colis();
+                
                 float idcoli = Float.parseFloat(colisJson.get("idColis").toString());
                 c.setId_colis((int)idcoli);
                 c.setContenu(colisJson.get("contenu").toString());
                 c.setPoids(Float.valueOf(colisJson.get("poids").toString()));
                 r.setId_colis(c);
                 }
-//                else
-//                {
-//                colis c = new colis();
-//                c.setId_colis(0);
-//                c.setContenu("0");
-//                c.setPoids(0);
-//                r.setId_colis(c);
-//                }
+                else
+                {
+                r.setId_colis(c);                
+                }
+                
+                
                 reservations.add(r);
             }
             
@@ -160,6 +161,24 @@ public class ServiceReservation {
      
      NetworkManager.getInstance().addToQueueAndWait(req);
      return resultOK;
+    }
+    
+    public void modifierReservation(reservation r) {
+
+        String Url = Statics.BASE_URL + "/Reservation/modifier?id=" + r.getId_res() + "&destination="+r.getDestination()+ "&pointdepart=" + r.getPointdepart()
+                +"&typeReservation="+r.getType_reservation()+"&prix="+r.getPrix()+"&objet="+r.getObjet()
+                +"&userChauffeur="+r.getUser_id_chauffeur().getId();
+        req.setUrl(Url);
+             System.out.println(Url);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                 resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                req.removeResponseListener(this);
+            }
+        });
+ 
+        NetworkManager.getInstance().addToQueueAndWait(req);
     }
     
 }

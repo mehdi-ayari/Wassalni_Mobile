@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.myapp.gui;
+package com.mycompany.myapp.gui.Reservation;
 
+import com.mycompany.myapp.gui.*;
 import com.codename1.l10n.DateFormat;
 import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.Button;
@@ -21,8 +22,8 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.mycompany.myapp.entities.colis;
 import com.mycompany.myapp.entities.reservation;
 import com.mycompany.myapp.entities.user;
-import com.mycompany.myapp.services.ServiceReservation;
-import com.mycompany.myapp.services.ServiceUser;
+import com.mycompany.myapp.services.Reservation.ServiceReservation;
+import com.mycompany.myapp.services.Reservation.ServiceUser;
 import java.util.ArrayList;
 import java.util.Date;
 

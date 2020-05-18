@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.myapp.services;
+package com.mycompany.myapp.services.Reservation;
 
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
