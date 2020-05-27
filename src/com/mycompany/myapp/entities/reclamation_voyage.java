@@ -26,6 +26,17 @@ public class reclamation_voyage {
         this.commentaire = commentaire;
     }
 
+    public reclamation_voyage(String titre, String commentaire) {
+        this.titre = titre;
+        this.commentaire = commentaire;
+        
+    }
+
+    public reclamation_voyage() {
+    }
+
+    
+    
     public int getId_reclamation_voyage() {
         return id_reclamation_voyage;
     }
