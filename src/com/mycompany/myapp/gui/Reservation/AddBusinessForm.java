@@ -39,6 +39,12 @@ public class AddBusinessForm extends Form {
        setTitle("Ajouter une Reservation Entreprise");
        setLayout(BoxLayout.y());
        
+        Label destination = new Label("Destination :");
+        Label pointdepart = new Label("Point Depart :");
+        Label nomclient = new Label("Nom Client :");
+        Label prenomclient = new Label("Prenom Client :");
+        Label date = new Label("Date Depart :");
+       
         TextField tfdestination = new TextField("","Destination");
         TextField tfpointdepart = new TextField("","Point Depart");
         TextField tfnomclient = new TextField("","Nom Client");
@@ -81,7 +87,7 @@ public class AddBusinessForm extends Form {
                 }
            }
        });
-        addAll(tfdestination,tfpointdepart,tfnomclient,tfprenomclient,datedepart,btvalider);
+        addAll(destination,tfdestination,pointdepart,tfpointdepart,nomclient,tfnomclient,prenomclient,tfprenomclient,date,datedepart,btvalider);
         getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, e->previous.showBack());
     
                 

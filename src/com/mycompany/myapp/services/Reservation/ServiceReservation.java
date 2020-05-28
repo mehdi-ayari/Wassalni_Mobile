@@ -10,7 +10,6 @@ import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
-import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.events.ActionListener;
 import com.mycompany.myapp.entities.colis;
 import java.util.ArrayList;
@@ -21,6 +20,13 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import com.codename1.util.MathUtil;
+
+import java.lang.*;
+
+
+
+
 
 /**
  *
@@ -180,5 +186,156 @@ public class ServiceReservation {
  
         NetworkManager.getInstance().addToQueueAndWait(req);
     }
+    
+    public static double distance(float lat1, float lon1, float lat2, float lon2) {
+        
+                 	
+		if ((lat1 == lat2) && (lon1 == lon2)) {
+			return 0;
+		}
+		else {
+                     double theta = lon1 - lon2;
+		     double dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(lat2)) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.cos(Math.toRadians(theta));
+		
+			dist = MathUtil.acos(dist);
+			dist = Math.toDegrees(dist);
+			dist = dist * 60 * 1.1515;
+			
+			dist = dist * 1.609344;
+                    
+                   
+			return (dist);
+		}
+	}
+    
+    
+    
+//    public static final double R = 6372.8; // In kilometers
+//
+//    // calculate distance with haversine formula
+//    public static double distance(double lat1, double lon1, double lat2, double lon2) {
+//        double dLat = Math.toRadians(lat2 - lat1);
+//        double dLon = Math.toRadians(lon2 - lon1);
+//        lat1 = Math.toRadians(lat1);
+//        lat2 = Math.toRadians(lat2);
+//
+//        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+//        double c = 2 * Math.asin(Math.sqrt(a));
+//        return R * c;
+//    }
+//    
+    
+  public double latitude(String adresse)
+    {
+        double l=0 ;
+        if (adresse.equals("centre ville,Tunis"))
+        {
+            l=36.8004904;
+            return l;
+//            list.set(0,"36.8004904");
+//            list.set(1,"36.8004904");
+//            list.add("10.185332118993045");
+           
+        }
+        else
+            if(adresse.equals("ariana"))
+        {
+            l=36.9685735;
+//            list.set(1,"10.1219855");
+            return l;
+        }
+        if (adresse.equals("ben arous"))
+        {
+            l=36.7718;
+            return l;
+        }
+        else
+        if (adresse.equals("bardo"))
+        {
+            l=36.8134113;
+//            list.set(1,"10.13219109");
+            return l;
+        }
+        else
+        if (adresse.equals("carthage"))
+        {
+            l=36.8577565;
+            return l;
+//            list.add("10.32821822");
+        }
+        else
+        if (adresse.equals("mourouj"))
+        {
+            l=36.719825;
+            return l;
+//            list.add("10.21923624");
+        }
+        else
+        if (adresse.equals("megrine"))
+        {
+            l=36.77179995;
+            return l;
+//            list.add("10.23862035");
+        }
+        
+        return l;
+    }
+
+  public double longitude(String adresse)
+    {
+        double l=0 ;
+        if (adresse.equals("centre ville,Tunis"))
+        {
+//            l=36.8004904;
+//            list.set(0,"36.8004904");
+//            list.set(1,"36.8004904");
+            l=10.185332118993045;
+            return l;
+           
+        }
+        if (adresse.equals("ariana"))
+        {
+//            l=36.9685735;
+            l=10.1219855;
+            return l;
+           // return list;
+        }
+        if (adresse.equals("ben arous"))
+        {
+//            list.add("36.7718");
+            l=10.2386203;
+            return l;
+        }
+        if (adresse.equals("bardo"))
+        {
+//            l=36.8134113;
+            l=10.13219109;
+            return l;
+           // return list;
+        }
+        if (adresse.equals("carthage"))
+        {
+//            l=36.8577565;
+            l=10.32821822;
+            return l;
+        }
+        if (adresse.equals("mourouj"))
+        {
+//            l=36.719825;
+            l=10.21923624;
+            return l;
+        }
+        if (adresse.equals("megrine"))
+        {
+//            l=36.77179995;
+            l=10.23862035;
+        return l;
+        }
+        
+            
+        return l;
+    }
+
+    
     
 }
