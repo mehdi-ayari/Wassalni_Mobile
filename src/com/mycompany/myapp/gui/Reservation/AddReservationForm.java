@@ -32,6 +32,11 @@ import java.util.Date;
 import java.util.*;
 import java.lang.*;
 import java.io.*;
+import com.codename1.location.Location;
+import com.codename1.location.LocationManager;
+import com.codename1.maps.Coord;
+
+
 
 /**
  *
@@ -110,18 +115,34 @@ public class AddReservationForm extends Form {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 if ((tfdestination.getText().length()==0)||(tfpointdepart.getText().length()==0))
-                    Dialog.show("Alert", "Please fill all the fields", new Command("OK"));
+                    Dialog.show("Alert", "SVP entrée une destination et une point depart", new Command("OK"));
+                else if ((typereservation.getSelectedItem().toString().equals("Choisir Type")))
+                    Dialog.show("Alert", "SVP selectionner un type de reservation", new Command("OK"));
+                else if ((objet.getSelectedItem().toString().equals("Choisir objet")))
+                    Dialog.show("Alert", "SVP selectionner un objet ", new Command("OK"));
+                else if ((objet(objet.getSelectedIndex()).equals("colis")) &&(tfcontenu.getText().length()==0))
+                    Dialog.show("Alert", "SVP entré un contenu ", new Command("OK"));
+                else if ((objet(objet.getSelectedIndex()).equals("colis")) && (tfpoids.getText().length()==0))
+                    Dialog.show("Alert", "SVP entré un poids ", new Command("OK"));
+                else if ((objet(objet.getSelectedIndex()).equals("colis")) && (isValidFloat(tfpoids.getText())==false))
+                    Dialog.show("Alert", "Le poids doit numerique ", new Command("OK"));
                 else
                 {
-                    
-                        reservation r = new reservation();
-                        colis coli = new colis();
-                        r.setDestination(tfdestination.getText());
-                        r.setPointdepart(tfpointdepart.getText());
-                        r.setObjet(objet(objet.getSelectedIndex()));
-                        r.setType_reservation(typereservation(typereservation.getSelectedIndex()));
-                        
-                        
+                    try {
+                        //                    Location position = LocationManager.getLocationManager().getLastKnownLocation();
+//                    double la = position.getLatitude();
+//                    double lo = position.getLongitude();
+//
+
+
+reservation r = new reservation();
+colis coli = new colis();
+r.setDestination(tfdestination.getText());
+r.setPointdepart(tfpointdepart.getText());
+r.setObjet(objet(objet.getSelectedIndex()));
+r.setType_reservation(typereservation(typereservation.getSelectedIndex()));
+
+
 //                        ArrayList<String> adressedep = new ArrayList<>();
 //                        adressedep = ServiceReservation.getInstance().latlong(tfpointdepart.getText());
 //                        float latdep = Float.valueOf(adressedep.get(0)) ;
@@ -130,76 +151,97 @@ public class AddReservationForm extends Form {
 //                        adressedest = ServiceReservation.getInstance().latlong(tfdestination.getText());
 //                        float latdes = Float.valueOf(adressedest.get(0)) ;
 //                        float longtdes = Float.valueOf(adressedest.get(1)) ;
-                        
-                        
-                        
-                        
-                        double distance = ServiceReservation.getInstance().distance((float)ServiceReservation.getInstance().latitude(tfdestination.getText()),
-                                (float)ServiceReservation.getInstance().longitude(tfdestination.getText()),
-                                (float)ServiceReservation.getInstance().latitude(tfpointdepart.getText()),
-                                (float)ServiceReservation.getInstance().longitude(tfpointdepart.getText()));
-                        
-                        
-                        System.out.println(tfdestination.getText());
-                        System.out.println(tfpointdepart.getText());
-                        System.out.println(ServiceReservation.getInstance().longitude(tfdestination.getText()));
-                        System.out.println(ServiceReservation.getInstance().latitude(tfdestination.getText()));
-                        System.out.println(ServiceReservation.getInstance().longitude(tfpointdepart.getText()));
-                        System.out.println(ServiceReservation.getInstance().latitude(tfpointdepart.getText()));
-                        System.out.println(distance);
 
-                        
-                        String da = format.format(date);
-                        String heure = da.substring(11,13);
-                        
-                        System.out.println(da);
-                        System.out.println(heure);
-                        int h = Integer.valueOf(heure);
-                        
-                        float prix = prix(typereservation(typereservation.getSelectedIndex()), distance, h);
-                        System.out.println(prix);        
-                                
-                                
-                        r.setPrix(prix);
-                        if(tfcontenu.getText()!="" || tfpoids.getText()!="")
-                        {
-                        coli.setContenu(tfcontenu.getText());
-                        coli.setPoids(Float.valueOf(tfpoids.getText()));
-                        }
-                        user c = users.get(cmb.getSelectedIndex());
-                        r.setUser_id_chauffeur(c);
-                        
-                        Dialog dlg = new Dialog("Prix et Distance");
-                        Label d = new Label("Distance : " + String.valueOf(distance) + " Km ");
-                        Label p = new Label("Prix : " + String.valueOf(prix)+ " DT  ");
-                        Button valider = new Button("Valider");
-                        Button annuller = new Button("Annuler");
-                        dlg.add(d);
-                        dlg.add(p);
-                        dlg.add(valider);
-                        dlg.add(annuller);
-                        
-                        annuller.addActionListener(new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent evt) {
-                                dlg.dispose();
-                            }
-                        });
-                        valider.addActionListener(new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent evt) {
-                                 if( ServiceReservation.getInstance().addResrvation(r,coli))
-                                 {
-                                 Dialog.show("Success","Connection accepted",new Command("OK"));
-                                 dlg.dispose();}
-                        else
-                                 {
-                                 Dialog.show("ERROR", "Server error", new Command("OK"));
-                                 dlg.dispose();
-                                 }
-                            }
-                        });
-                        dlg.showDialog();
+List<Double> latlongdest = ServiceReservation.getInstance().geocode(tfdestination.getText());
+List<Double> latlongdepar = ServiceReservation.getInstance().geocode(tfpointdepart.getText());
+Coord origin = new Coord(latlongdepar.get(1),latlongdepar.get(0));
+Coord direction = new Coord(latlongdest.get(1),latlongdest.get(0));
+double distance;
+
+distance = ServiceReservation.getInstance().getDirections(origin, direction)/1000;
+System.out.println(distance);
+
+
+
+//                        double distance = ServiceReservation.getInstance().distance((float)ServiceReservation.getInstance().latitude(tfdestination.getText()),
+//                                (float)ServiceReservation.getInstance().longitude(tfdestination.getText()),
+//                                (float)ServiceReservation.getInstance().latitude(tfpointdepart.getText()),
+//                                (float)ServiceReservation.getInstance().longitude(tfpointdepart.getText()));
+//
+
+System.out.println(tfdestination.getText());
+System.out.println(tfpointdepart.getText());
+
+
+
+String da = format.format(date);  
+String heure = da.substring(11,13);
+
+System.out.println(da);
+System.out.println(heure);
+int h = Integer.valueOf(heure);
+
+float prix = prix(typereservation(typereservation.getSelectedIndex()), distance, h);
+System.out.println(prix);
+//                        System.out.println(la);
+//                        System.out.println(lo);
+
+
+//                    try {   
+//                        System.out.println(ServiceReservation.getInstance().local());
+//                    } catch (IOException ex) {
+//                            System.out.println("zabbbbbbbbb");
+//                                  
+//                    }
+
+
+
+r.setPrix(prix);
+if(tfcontenu.getText()!="" || tfpoids.getText()!="")
+{
+    coli.setContenu(tfcontenu.getText());
+    coli.setPoids(Float.valueOf(tfpoids.getText()));
+}
+user c = users.get(cmb.getSelectedIndex());
+r.setUser_id_chauffeur(c);
+
+Dialog dlg = new Dialog("Prix et Distance");
+Label d = new Label("Distance : " + String.valueOf(distance) + " Km ");
+Label p = new Label("Prix : " + String.valueOf(prix)+ " DT  ");
+Button valider = new Button("Valider");
+Button annuller = new Button("Annuler");
+dlg.add(d);
+dlg.add(p);
+dlg.add(valider);
+dlg.add(annuller);
+
+annuller.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        dlg.dispose();
+    }
+});
+valider.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        if( ServiceReservation.getInstance().addResrvation(r,coli))
+        {
+            Dialog.show("Success","Connection accepted",new Command("OK"));
+            dlg.dispose();
+        ListReservationForm f = new ListReservationForm(previous);
+                f.showBack();
+        }
+        else
+        {
+            Dialog.show("ERROR", "Server error", new Command("OK"));
+            dlg.dispose();
+        }
+    }
+});
+dlg.showDialog();
+                    } catch (IOException ex) {
+                        System.out.println("distance");
+                    }
                         
 
                 }
@@ -211,8 +253,8 @@ public class AddReservationForm extends Form {
         
         
         this.addAll(destination,tfdestination,pointdepart,tfpointdepart,objetres,objet,type,typereservation,Chauffeur,cmb,contenu,tfcontenu,poids,tfpoids,btnValider);
-
-        getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, e->previous.showBack());
+        
+           getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, e->previous.showBack());
     }
     
     public String objet(int index)
@@ -278,6 +320,17 @@ public class AddReservationForm extends Form {
         return p;
     
     }
+    
+    public static boolean isValidFloat(String str) {
+		boolean isValid = false;
+		try {
+			Integer newInput = Integer.valueOf(str);
+			float i = newInput.floatValue();
+			isValid = true;
+		} finally {
+			return isValid;
+		}
+	}
     
     
 }

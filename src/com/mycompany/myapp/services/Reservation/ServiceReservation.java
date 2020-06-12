@@ -5,11 +5,18 @@
  */
 package com.mycompany.myapp.services.Reservation;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
+import com.codename1.location.Location;
+import com.codename1.location.LocationManager;
+import com.codename1.maps.Coord;
 import com.codename1.ui.events.ActionListener;
 import com.mycompany.myapp.entities.colis;
 import java.util.ArrayList;
@@ -39,7 +46,9 @@ public class ServiceReservation {
     public static ServiceReservation instance=null;
     public boolean resultOK;
     private ConnectionRequest req;
-
+    private List<Double> loc;
+    private double distance;
+    
     private ServiceReservation() {
          req = new ConnectionRequest();
     }
@@ -187,26 +196,26 @@ public class ServiceReservation {
         NetworkManager.getInstance().addToQueueAndWait(req);
     }
     
-    public static double distance(float lat1, float lon1, float lat2, float lon2) {
-        
-                 	
-		if ((lat1 == lat2) && (lon1 == lon2)) {
-			return 0;
-		}
-		else {
-                     double theta = lon1 - lon2;
-		     double dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(lat2)) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.cos(Math.toRadians(theta));
-		
-			dist = MathUtil.acos(dist);
-			dist = Math.toDegrees(dist);
-			dist = dist * 60 * 1.1515;
-			
-			dist = dist * 1.609344;
-                    
-                   
-			return (dist);
-		}
-	}
+//    public static double distance(float lat1, float lon1, float lat2, float lon2) {
+//        
+//                 	
+//		if ((lat1 == lat2) && (lon1 == lon2)) {
+//			return 0;
+//		}
+//		else {
+//                     double theta = lon1 - lon2;
+//		     double dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(lat2)) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.cos(Math.toRadians(theta));
+//		
+//			dist = MathUtil.acos(dist);
+//			dist = Math.toDegrees(dist);
+//			dist = dist * 60 * 1.1515;
+//			
+//			dist = dist * 1.609344;
+//                    
+//                   
+//			return (dist);
+//		}
+//	}
     
     
     
@@ -225,117 +234,214 @@ public class ServiceReservation {
 //    }
 //    
     
-  public double latitude(String adresse)
-    {
-        double l=0 ;
-        if (adresse.equals("centre ville,Tunis"))
-        {
-            l=36.8004904;
-            return l;
-//            list.set(0,"36.8004904");
-//            list.set(1,"36.8004904");
-//            list.add("10.185332118993045");
-           
-        }
-        else
-            if(adresse.equals("ariana"))
-        {
-            l=36.9685735;
-//            list.set(1,"10.1219855");
-            return l;
-        }
-        if (adresse.equals("ben arous"))
-        {
-            l=36.7718;
-            return l;
-        }
-        else
-        if (adresse.equals("bardo"))
-        {
-            l=36.8134113;
-//            list.set(1,"10.13219109");
-            return l;
-        }
-        else
-        if (adresse.equals("carthage"))
-        {
-            l=36.8577565;
-            return l;
-//            list.add("10.32821822");
-        }
-        else
-        if (adresse.equals("mourouj"))
-        {
-            l=36.719825;
-            return l;
-//            list.add("10.21923624");
-        }
-        else
-        if (adresse.equals("megrine"))
-        {
-            l=36.77179995;
-            return l;
-//            list.add("10.23862035");
-        }
-        
-        return l;
-    }
-
-  public double longitude(String adresse)
-    {
-        double l=0 ;
-        if (adresse.equals("centre ville,Tunis"))
-        {
+//  public double latitude(String adresse)
+//    {
+//        double l=0 ;
+//        if (adresse.equals("centre ville,Tunis"))
+//        {
 //            l=36.8004904;
-//            list.set(0,"36.8004904");
-//            list.set(1,"36.8004904");
-            l=10.185332118993045;
-            return l;
-           
-        }
-        if (adresse.equals("ariana"))
-        {
+//            return l;
+////            list.set(0,"36.8004904");
+////            list.set(1,"36.8004904");
+////            list.add("10.185332118993045");
+//           
+//        }
+//        else
+//            if(adresse.equals("ariana"))
+//        {
 //            l=36.9685735;
-            l=10.1219855;
-            return l;
-           // return list;
-        }
-        if (adresse.equals("ben arous"))
-        {
-//            list.add("36.7718");
-            l=10.2386203;
-            return l;
-        }
-        if (adresse.equals("bardo"))
-        {
+////            list.set(1,"10.1219855");
+//            return l;
+//        }
+//        if (adresse.equals("ben arous"))
+//        {
+//            l=36.7718;
+//            return l;
+//        }
+//        else
+//        if (adresse.equals("bardo"))
+//        {
 //            l=36.8134113;
-            l=10.13219109;
-            return l;
-           // return list;
-        }
-        if (adresse.equals("carthage"))
-        {
+////            list.set(1,"10.13219109");
+//            return l;
+//        }
+//        else
+//        if (adresse.equals("carthage"))
+//        {
 //            l=36.8577565;
-            l=10.32821822;
-            return l;
-        }
-        if (adresse.equals("mourouj"))
-        {
+//            return l;
+////            list.add("10.32821822");
+//        }
+//        else
+//        if (adresse.equals("mourouj"))
+//        {
 //            l=36.719825;
-            l=10.21923624;
-            return l;
-        }
-        if (adresse.equals("megrine"))
-        {
+//            return l;
+////            list.add("10.21923624");
+//        }
+//        else
+//        if (adresse.equals("megrine"))
+//        {
 //            l=36.77179995;
-            l=10.23862035;
-        return l;
+//            return l;
+////            list.add("10.23862035");
+//        }
+//        
+//        return l;
+//    }
+//
+//  public double longitude(String adresse)
+//    {
+//        double l=0 ;
+//        if (adresse.equals("centre ville,Tunis"))
+//        {
+////            l=36.8004904;
+////            list.set(0,"36.8004904");
+////            list.set(1,"36.8004904");
+//            l=10.185332118993045;
+//            return l;
+//           
+//        }
+//        if (adresse.equals("ariana"))
+//        {
+////            l=36.9685735;
+//            l=10.1219855;
+//            return l;
+//           // return list;
+//        }
+//        if (adresse.equals("ben arous"))
+//        {
+////            list.add("36.7718");
+//            l=10.2386203;
+//            return l;
+//        }
+//        if (adresse.equals("bardo"))
+//        {
+////            l=36.8134113;
+//            l=10.13219109;
+//            return l;
+//           // return list;
+//        }
+//        if (adresse.equals("carthage"))
+//        {
+////            l=36.8577565;
+//            l=10.32821822;
+//            return l;
+//        }
+//        if (adresse.equals("mourouj"))
+//        {
+////            l=36.719825;
+//            l=10.21923624;
+//            return l;
+//        }
+//        if (adresse.equals("megrine"))
+//        {
+////            l=36.77179995;
+//            l=10.23862035;
+//        return l;
+//        }
+//        
+//            
+//        return l;
+//    }
+
+//    public double local() throws IOException
+//    {
+//    LocationManager locationManager = LocationManager.getLocationManager();
+//    Location location = locationManager.getCurrentLocation();
+//    Double loc1= location.getLatitude();
+//    Double loc2= location.getLongitude();
+//    System.out.println("Latitude: "+ loc1);
+//    System.out.println("Longitude: "+ loc2);
+//    
+//    return loc1;
+//    }
+  
+  private List<Double> geocodeParse(String jsonText){
+        List<Double> list2 = null;
+        JSONParser j = new JSONParser();
+        try {
+            Map<String,Object> ListJson = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
+            List<Map<String,Object>> list = (List<Map<String,Object>>)ListJson.get("features");
+            
+            list2 = (List<Double>)list.get(0).get("center");
+
+            
+            return list2;
+            
+
+
+        } catch (IOException ex) {
+            
         }
         
+        return list2;
+
+        
+    }
+      
+      public List<Double> geocode(String address){
+        
+        ConnectionRequest req = new ConnectionRequest();
+        req.setUrl("https://api.mapbox.com/geocoding/v5/mapbox.places/tunisia,"+address+".json?access_token=pk.eyJ1IjoibWVoZGk1MCIsImEiOiJjazh0am9rcWowMHdwM2hvazBsM3Jna3dhIn0.khgMF0AilXy9ja0Y7CRY8Q");
+        req.setUserAgent("Opera/8.0 (Windows NT 5.1; U; en)");
+        req.setPost(false);
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                    loc = geocodeParse(new String(req.getResponseData()));             
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return loc;
+    }
+      
+      private double DirectionParse(String jsonText)
+    {
+         
+        JSONParser j = new JSONParser();
+        try {
+            Map<String,Object> ListJson = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
+            List<Map<String,Object>> list = (List<Map<String,Object>>)ListJson.get("routes");
             
-        return l;
+            
+            distance = Float.parseFloat(list.get(0).get("distance").toString());
+            System.out.println(distance);
+            System.out.println(distance);
+
+            
+            return distance;
+            
+
+
+        } catch (IOException ex) {
+            
+        }
+        
+        return distance;
+
+
+        
     }
 
-    
-    
+    public double getDirections(Coord origin, Coord destination) throws IOException {
+        ConnectionRequest req = new ConnectionRequest();
+        req.setUrl("https://api.mapbox.com/directions/v5/mapbox/driving/"+origin.getLongitude()+"%2C"+origin.getLatitude()+"%3B"+destination.getLongitude()+"%2C"+destination.getLatitude()+"?alternatives=true&geometries=geojson&steps=true&access_token=pk.eyJ1IjoiamF3aGFyY2giLCJhIjoiY2s2dGVvOGlpMDB3NDNtcHVzcmxhdmR2YyJ9.VHALBLsdspgxm5eIuC270Q");
+        req.setUserAgent("Opera/8.0 (Windows NT 5.1; U; en)");
+        req.setPost(false);
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        JSONParser p = new JSONParser();
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                    distance = DirectionParse(new String(req.getResponseData()));             
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return distance;
+    }
+
 }

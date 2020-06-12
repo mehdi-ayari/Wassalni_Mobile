@@ -33,7 +33,10 @@ import java.util.Date;
  * @author Mahdi
  */
 public class AddBusinessForm extends Form {
-  
+          DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+          Date date = new Date();
+          SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     public AddBusinessForm(Form previous) {
         
        setTitle("Ajouter une Reservation Entreprise");
@@ -56,10 +59,38 @@ public class AddBusinessForm extends Form {
         btvalider.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent evt) {
-               if ((tfdestination.getText().length()==0)||(tfpointdepart.getText().length()==0)
-                       ||(tfnomclient.getText().length()==0)||(tfprenomclient.getText().length()==0))
-                    Dialog.show("Alert", "Please fill all the fields", new Command("OK"));
-                else
+//                        Date datecontrole = datedepart.getDate();
+////                        System.out.println(datedept);
+//                        String datesaisie = formater.format(datecontrole);
+//                        String heurecontrole = format.format(datesaisie);
+//                        String heuresaisie = heurecontrole.substring(11,13);
+////                        System.out.println(datedepar);
+//
+//                        String da = format.format(date);  
+//                        String heure = da.substring(11,13);
+//
+////                        System.out.println(da);
+////                        System.out.println(heure);
+//                        int hc = Integer.valueOf(heure);
+//                        int hs = Integer.valueOf(heuresaisie);
+                        
+               if (tfdestination.getText().length()==0)
+                 Dialog.show("Alert", "SVP entrée une destination", new Command("OK"));
+               else if (tfpointdepart.getText().length()==0)
+                 Dialog.show("Alert", "SVP entrée une point de depart ", new Command("OK"));
+               else if((tfnomclient.getText().length()==0))
+                 Dialog.show("Alert", "SVP entrée le nom de votre client", new Command("OK"));
+               else if ((tfnomclient.getText().length()==0) && (isValidFloat(tfnomclient.getText())==true))
+                 Dialog.show("Alert", " le champ nom client ne doit pas etre numerique ", new Command("OK"));
+               else if((tfprenomclient.getText().length()==0))
+                 Dialog.show("Alert", "SVP entrée le prenom de votre client", new Command("OK"));
+               else if ((tfprenomclient.getText().length()==0) && (isValidFloat(tfprenomclient.getText())==true))
+                 Dialog.show("Alert", " le champ prenom client ne doit pas entre numerique ", new Command("OK"));
+//               else if ((hc<=hs+1))
+//                 Dialog.show("Alert", "la date de reservation doit etre au moins aprés une du dadte actuelle", new Command("OK"));
+//               else if ((hc<=hs+1))
+//                 Dialog.show("Alert", "la date de reservation doit etre au moins aprés une du dadte actuelle", new Command("OK"));
+               else
                 {
                     reservation_business b = new reservation_business();
                     
@@ -92,7 +123,16 @@ public class AddBusinessForm extends Form {
     
                 
     }
-    
+    public static boolean isValidFloat(String str) {
+		boolean isValid = false;
+		try {
+			Integer newInput = Integer.valueOf(str);
+			float i = newInput.floatValue();
+			isValid = true;
+		} finally {
+			return isValid;
+		}
+	}
     
     
 }
