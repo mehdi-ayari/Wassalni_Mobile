@@ -98,8 +98,8 @@ private ComboBox cmb;
         C1.add(datereservation);
         C1.add(prix);
         C1.add(chauffeur);
-        C1.add(contenu);
-        C1.add(poids);
+//        C1.add(contenu);
+//        C1.add(poids);
         
         C2.add(supprimer);
         C2.add(modifier);

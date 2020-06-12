@@ -5,6 +5,11 @@
  */
 package com.mycompany.myapp.gui.Reservation;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+
+
 import com.mycompany.myapp.gui.*;
 import com.codename1.l10n.DateFormat;
 import com.codename1.l10n.SimpleDateFormat;
@@ -35,6 +40,7 @@ import java.io.*;
 import com.codename1.location.Location;
 import com.codename1.location.LocationManager;
 import com.codename1.maps.Coord;
+import com.codename1.ui.Display;
 
 
 
@@ -65,7 +71,12 @@ public class AddReservationForm extends Form {
         DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         Button btnValider = new Button("Add Reservation");
-       
+        String accountSID = "AC16fce352cd301d805ce075ba4b7969d0";
+        String authToken = "90023e188332683906bd451a7a227703";
+        String fromPhone = "+14157544698";
+        public static final String ACCOUNT_SID = "AC16fce352cd301d805ce075ba4b7969d0";
+    public static final String AUTH_TOKEN = "90023e188332683906bd451a7a227703";
+    
     private ComboBox cmb;
     ServiceUser seruser = new ServiceUser();
     public AddReservationForm(Form previous) {
@@ -230,6 +241,18 @@ valider.addActionListener(new ActionListener() {
             dlg.dispose();
         ListReservationForm f = new ListReservationForm(previous);
                 f.showBack();
+                com.codename1.messaging.Message m;
+            m = new com.codename1.messaging.Message("Merci pour votre confiance votre reservation est ajoutée avec succée");
+               Display.getInstance().sendMessage(new String[] {"mehdi.ayari@esprit.tn"}, "Ajout Reservation", m);
+//        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+//        Message message = Message.creator(
+//                new com.twilio.type.PhoneNumber("+14157544698"),
+//                new com.twilio.type.PhoneNumber("+15017122661"),
+//                "votre reservation est ajouter avec succée")
+//            .create();
+//
+//        System.out.println(message.getSid());
+//        
         }
         else
         {
