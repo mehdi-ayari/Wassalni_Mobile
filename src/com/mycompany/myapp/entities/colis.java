@@ -25,6 +25,9 @@ public class colis {
         this.contenu = contenu;
     }
 
+    public colis() {
+    }
+
     public int getId_colis() {
         return id_colis;
     }

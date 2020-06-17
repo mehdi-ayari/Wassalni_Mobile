@@ -22,11 +22,11 @@ public class user {
     private int id,telephone,nbr_emp;
     private String username,username_canonical,
             email,email_canonical,salt,password,confirmation_token,
-            firstName,lastName,adresse;
+            firstName,lastName,adresse,role_user;
     
-    private roleus role_user;
+   
 
-    public user(int id, int telephone, int nbr_emp, String username, String username_canonical, String email, String email_canonical, String salt, String password, String confirmation_token, String firstName, String lastName, String adresse, roleus role_user) {
+    public user(int id, int telephone, int nbr_emp, String username, String username_canonical, String email, String email_canonical, String salt, String password, String confirmation_token, String firstName, String lastName, String adresse, String role_user) {
         this.id = id;
         this.telephone = telephone;
         this.nbr_emp = nbr_emp;
@@ -43,7 +43,7 @@ public class user {
         this.role_user = role_user;
     }
 
-    public user(int telephone, int nbr_emp, String username, String username_canonical, String email, String email_canonical, String salt, String password, String confirmation_token, String firstName, String lastName, String adresse, roleus role_user) {
+    public user(int telephone, int nbr_emp, String username, String username_canonical, String email, String email_canonical, String salt, String password, String confirmation_token, String firstName, String lastName, String adresse, String role_user) {
         this.telephone = telephone;
         this.nbr_emp = nbr_emp;
         this.username = username;
@@ -58,6 +58,11 @@ public class user {
         this.adresse = adresse;
         this.role_user = role_user;
     }
+
+    public user() {
+    }
+    
+    
 
     public int getId() {
         return id;
@@ -111,7 +116,7 @@ public class user {
         return adresse;
     }
 
-    public roleus getRole_user() {
+    public String getRole_user() {
         return role_user;
     }
 
@@ -167,7 +172,7 @@ public class user {
         this.adresse = adresse;
     }
 
-    public void setRole_user(roleus role_user) {
+    public void setRole_user(String role_user) {
         this.role_user = role_user;
     }
 
