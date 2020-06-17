@@ -10,21 +10,37 @@ package com.mycompany.myapp.entities;
  * @author jawha
  */
 public class Comment {
-    private int id_comment,id_news,id_user;
+    
+    
+    private String id;
+    private String id_u;   
     private String text;
-    private String CreatedAt;
+    private String date;
+    private String UserName;
     private String UserPhoto;
     private String NbrCmt;
-     private String UserName;
+    private String idA;
 
-    public Comment(int id_comment, int id_news, int id_user, String text, String CreatedAt, String UserPhoto, String NbrCmt, String UserName) {
-        this.id_comment = id_comment;
-        this.id_news = id_news;
-        this.id_user = id_user;
+    public Comment(){}
+
+    public Comment(String id, String id_u, String text, String date, String UserName, String UserPhoto, String NbrCmt) {
+        this.id = id;
+        this.id_u = id_u;
+        
         this.text = text;
-        this.CreatedAt = CreatedAt;
+      
+        this.date = date;
+        this.UserName = UserName;
         this.UserPhoto = UserPhoto;
         this.NbrCmt = NbrCmt;
+       
+    }
+
+    public String getUserName() {
+        return UserName;
+    }
+
+    public void setUserName(String UserName) {
         this.UserName = UserName;
     }
 
@@ -43,54 +59,34 @@ public class Comment {
     public void setNbrCmt(String NbrCmt) {
         this.NbrCmt = NbrCmt;
     }
-
-    public String getUserName() {
-        return UserName;
-    }
-
-    public void setUserName(String UserName) {
-        this.UserName = UserName;
-    }
-
-    public Comment(String text) {
-        this.text = text;
-    }
-
-    public String getCreatedAt() {
-        return CreatedAt;
-    }
-
-    public void setCreatedAt(String CreatedAt) {
-        this.CreatedAt = CreatedAt;
-    }
-
-    public Comment() {
-    }
-
+    
   
-    public int getId_comment() {
-        return id_comment;
+
+    public String getId() {
+        return id;
     }
 
-    public void setId_comment(int id_comment) {
-        this.id_comment = id_comment;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public int getId_news() {
-        return id_news;
+    public String getId_u() {
+        return id_u;
     }
 
-    public void setId_news(int id_news) {
-        this.id_news = id_news;
+    public void setId_u(String id_u) {
+        this.id_u = id_u;
     }
 
-    public int getId_user() {
-        return id_user;
+    public String getIdA() {
+        return idA;
     }
 
-    public void setId_user(int id_user) {
-        this.id_user = id_user;
+    public void setIdA(String idA) {
+        this.idA = idA;
     }
+
+    
 
     public String getText() {
         return text;
@@ -100,10 +96,23 @@ public class Comment {
         this.text = text;
     }
 
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+   
     @Override
     public String toString() {
-        return "Comment{" + "id_comment=" + id_comment + ", id_news=" + id_news + ", id_user=" + id_user + ", text=" + text + ", CreatedAt=" + CreatedAt + ", UserPhoto=" + UserPhoto + ", NbrCmt=" + NbrCmt + ", UserName=" + UserName + '}';
+        return "Comment{" + "id=" + id + ", id_u=" + id_u + ", text=" + text + ", date=" + date + ", UserName=" + UserName + ", UserPhoto=" + UserPhoto + ", NbrCmt=" + NbrCmt + '}';
     }
+
+   
+    
     
     
 }

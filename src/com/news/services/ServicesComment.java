@@ -93,7 +93,7 @@ public class ServicesComment {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return resultOK;
     }
-     public ArrayList<Comment> getAllComment() {
+     public ArrayList<Comment> getAllComment(String id) {
         String url = Statics.BASE_URL + "news/ListCommentMobile";
         req.setUrl(url);
         req.setPost(false);

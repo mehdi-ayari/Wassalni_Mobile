@@ -28,6 +28,7 @@ import com.mycompany.myapp.entities.user;
 import com.news.services.ServicesNews;
 import com.news.services.ServicesComment;
 import com.mycompany.myapp.entities.Comment;
+import java.util.ArrayList;
 
 /**
  *
@@ -108,6 +109,55 @@ public class NewsClient extends Form {
         DescrField.setText(c.getDescr());
 
         Container Container = new Container(new FlowLayout(CENTER));
+        //
+         ArrayList<Comment> cmts = com.news.services.ServicesComment.getInstance().getAllComment(c.getId_news());
+      
+        if(cmts.size() !=0) {Label NbrComt = new Label("Comment("+cmts.get(0).getNbrCmt()+")"); add(NbrComt);}
+        
+        else {Label NbrComt = new Label("Comment(0)"); add(NbrComt);}
+       
+        
+        
+         for(int i=0 ; i<cmts.size();i++)
+         {
+           URL=Statics.IMG_URL+cmts.get(i).getUserPhoto();
+           Image   img= URLImage.createToStorage(enc, URL, URL, URLImage.RESIZE_SCALE);
+           ImageViewer   imgv=new ImageViewer(img);
+           
+           cmts.get(i).setIdA(News.getId());
+           
+           SpanLabel UserName= new SpanLabel();
+           UserName.setText(cmts.get(i).getUserName());
+           
+           Container c1 = new Container(BoxLayout.x());
+           c1.addAll(imgv,UserName);
+           
+          
+           SpanLabel text= new SpanLabel();
+           text.setText(cmts.get(i).getText());
+           
+            Container c2 = new Container(BoxLayout.x());
+            SpanLabel dateC= new SpanLabel();
+           dateC.setText(cmts.get(i).getDate()); 
+           SpanLabel Likes= new SpanLabel();
+           Likes.setText("Likes: "+cmts.get(i).getPoint()); 
+           SpanLabel NbrReply= new SpanLabel();
+           NbrReply.setText("Replies("+cmts.get(i).getNbrReply()+")");
+            c2.addAll(Likes,dateC,NbrReply);
+           
+           Container c = new Container(BoxLayout.y());
+           
+           c.addAll(c1,text,c2);
+           
+           Label choix = new Label();
+           c.add(choix);
+           c.setLeadComponent(choix);
+           add(c);
+           Comment cmt = cmts.get(i);
+         choix.addPointerReleasedListener(e-> new ListReplies( current,cmt, user).show());
+         
+         }
+         //
         Container.addAll(Titre, DescrField, List);
         NewsDetail.add(img);
         NewsDetail.add(Container);
