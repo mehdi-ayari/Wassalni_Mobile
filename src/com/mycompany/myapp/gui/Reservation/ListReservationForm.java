@@ -56,7 +56,7 @@ private ComboBox cmb;
 //        String date = formater.format(r.getDate_reservation());
         Label datereservation = new Label ("Date Reservation : " + r.getDate_reservation());
         Label prix = new Label ("Prix : " + r.getPrix());
-        Label chauffeur = new Label ("Chauffeur : " + r.getUser_id_chauffeur().getLastName());
+        Label chauffeur = new Label ("Chauffeur : " + r.getUser_id_chauffeur().getLastname());
         Label contenu = new Label ("Contenu : " );
         Label poids = new Label ("Poids : " );
         Button supprimer = new Button("Supprimer");
@@ -85,7 +85,7 @@ private ComboBox cmb;
         String date = formater.format(r.getDate_reservation());
         Label datereservation = new Label ("Date Reservation : " + date);
         Label prix = new Label ("Prix : " + r.getPrix());
-        Label chauffeur = new Label ("Chauffeur : " + r.getUser_id_chauffeur().getLastName() +" "+r.getUser_id_chauffeur().getFirstName());
+        Label chauffeur = new Label ("Chauffeur : " + r.getUser_id_chauffeur().getLastname() +" "+r.getUser_id_chauffeur().getFirstname());
         Label contenu = new Label ("Contenu : " + r.getId_colis().getContenu() );
         Label poids = new Label ("Poids : " + r.getId_colis().getPoids() );
 
@@ -151,7 +151,7 @@ private ComboBox cmb;
                 users.addAll(ServiceUser.getInstance().getAllUsers());
 
                 for (user object : users) {
-                    cmb.addItem(object.getFirstName()+" "+object.getLastName());
+                    cmb.addItem(object.getFirstname()+" "+object.getLastname());
                 }
                 
                 edit.addAll(des,tfdestination,point,tfpointdepart,ob,objetres,ty,typereservation,ch,cmb,btmodifier);

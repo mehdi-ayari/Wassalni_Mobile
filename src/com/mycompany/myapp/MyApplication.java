@@ -62,13 +62,14 @@ public class MyApplication {
 //        Form hi = new Form("Hi World", BoxLayout.y());
 //        hi.add(new Label("Hi World"));
 //        hi.show();
-          new HomeForm().show();
+          //new HomeForm().show();
         if (current != null) {
             current.show();
             return;
         }
+          new com.news.gui.Login(theme).show();
 
-       new com.news.gui.Login(theme).show();
+       
 
     }
 

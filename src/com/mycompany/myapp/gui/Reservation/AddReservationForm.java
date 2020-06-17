@@ -85,7 +85,7 @@ public class AddReservationForm extends Form {
         users.addAll(ServiceUser.getInstance().getAllUsers());
 
         for (user object : users) {
-            cmb.addItem(object.getFirstName()+" "+object.getLastName());
+            cmb.addItem(object.getFirstname()+" "+object.getLastname());
         }
          cmb.addActionListener((evt) -> {
             user c = users.get(cmb.getSelectedIndex());

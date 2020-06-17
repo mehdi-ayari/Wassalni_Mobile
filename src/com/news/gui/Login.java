@@ -63,7 +63,7 @@ public class Login extends Form {
                         password.setText("");
                         Session.start(User);
                         
-                        if (User.getRoles().equals("client")) {
+                        if (User.getRoles().equals("user")) {
                             new Client(current,theme).show();
                         } else {
                           new Entreprise(current,theme).show();
