@@ -142,7 +142,7 @@ public class NewsClient extends Form {
                         Dialog.show("ERROR", "Server error", new Command("OK"));
                     }
                 } catch (NumberFormatException e) {
-                    Dialog.show("ERROR", "phone must be a number", new Command("OK"));
+                    Dialog.show("ERROR", "", new Command("OK"));
                 }
 
             }

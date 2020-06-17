@@ -126,7 +126,7 @@ public class ServicesComment {
     }
     
     
-    public ArrayList<Comment> getAllComment(String id)
+    public ArrayList<Comment> getAllComment(int id)
     {
         String url = Statics.BASE_URL+"/ListCommentMobile/"+id;
         req.setUrl(url);
