@@ -110,11 +110,11 @@ public class NewsClient extends Form {
 
         Container Container = new Container(new FlowLayout(CENTER));
         //
-         ArrayList<Comment> cmts = com.news.services.ServicesComment.getInstance().getAllComment(c.getId_news());
+         ArrayList<Comment> cmts = Services.ServiceComment.getInstance().getAllCmts(News.getId());
       
-        if(cmts.size() !=0) {Label NbrComt = new Label("Comment("+cmts.get(0).getNbrCmt()+")"); add(NbrComt);}
+        if(cmts.size() !=0) {Label NbrComt = new Label("Comments("+cmts.get(0).getNbrCmt()+")"); add(NbrComt);}
         
-        else {Label NbrComt = new Label("Comment(0)"); add(NbrComt);}
+        else {Label NbrComt = new Label("Comments(0)"); add(NbrComt);}
        
         
         
@@ -156,7 +156,8 @@ public class NewsClient extends Form {
            Comment cmt = cmts.get(i);
          choix.addPointerReleasedListener(e-> new ListReplies( current,cmt, user).show());
          
-         }
+         }     
+      
          //
         Container.addAll(Titre, DescrField, List);
         NewsDetail.add(img);

@@ -5,11 +5,13 @@
  */
 package com.news.services;
 
+import com.codename1.components.InfiniteProgress;
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
 import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.events.ActionListener;
 import com.mycompany.myapp.entities.Comment;
 import com.mycompany.myapp.utils.Statics;
@@ -41,41 +43,9 @@ public class ServicesComment {
         return instance;
     }
     
-     public ArrayList<Comment> parseComment(String jsonText) {
-        try {
-            Comment = new ArrayList<>();
-            JSONParser j = new JSONParser();
-            Map<String, Object> tasksListJson = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
-            List<Map<String, Object>> list = (List<Map<String, Object>>) tasksListJson.get("root");
-
-            for (Map<String, Object> obj : list) {
-                //Création des tâches et récupération de leurs données
-                Comment n = new Comment();
-                float id = Float.parseFloat(obj.get("id").toString());
-                float news_id = Float.parseFloat(obj.get("news_id").toString());
-                float user_id = Float.parseFloat(obj.get("user_id").toString());
-                String createdAt = obj.get("createdAt").toString();
-                String value = createdAt.substring(6, 16);
-                n.setCreatedAt(value);
-                
-                n.setId_comment((int) id);
-                 n.setId_news((int) news_id);
-                  n.setId_user((int) user_id);
-                n.setText(obj.get("text").toString());
-                         
-
-                Comment.add(n);
-            }
-
-        } catch (IOException ex) {
-
-        }
-
-        return Comment;
-    }
-
+    
       public boolean AddComment(Comment c) {
-        String url = Statics.BASE_URL + "news/AddCommentMobile/?text=" + c.getText()  + "&news_id=" + c.getId_news() + "&user_id=" + c.getId_user() ; //création de l'URL
+        String url = Statics.BASE_URL + "news/AddCommentMobile/?text=" + c.getText()  + "&news_id=" + c.getIdA()+ "&user_id=" + c.getId_u(); //création de l'URL
         req.setUrl(url);// Insertion de l'URL de notre demande de connexion
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
@@ -93,22 +63,9 @@ public class ServicesComment {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return resultOK;
     }
-     public ArrayList<Comment> getAllComment(String id) {
-        String url = Statics.BASE_URL + "news/ListCommentMobile";
-        req.setUrl(url);
-        req.setPost(false);
-        req.addResponseListener(new ActionListener<NetworkEvent>() {
-            @Override
-            public void actionPerformed(NetworkEvent evt) {
-                Comment = parseComment(new String(req.getResponseData()));
-                req.removeResponseListener(this);
-            }
-        });
-        NetworkManager.getInstance().addToQueueAndWait(req);
-        return Comment;
-    }
+     
      public String DeleteComment(Comment c) {
-        String url = Statics.BASE_URL + "news/deleteCommentMobile/?id=" + c.getId_comment();
+        String url = Statics.BASE_URL + "news/deleteCommentMobile/?id=" + c.getId();
         req.setUrl(url);// Insertion de l'URL de notre demande de connexion
         System.out.println(url);
 
@@ -134,7 +91,7 @@ public class ServicesComment {
         return result;
     }
         public boolean EditComment(Comment c) {
-        String url = Statics.BASE_URL + "news/EditCommentMobile/?id=" + c.getId_comment() + "text=" + c.getText(); //création de l'URL
+        String url = Statics.BASE_URL + "news/EditCommentMobile/?id=" + c.getIdA()+ "text=" + c.getText(); //création de l'URL
         System.out.println(url);
         req.setUrl(url);// Insertion de l'URL de notre demande de connexion
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -147,4 +104,46 @@ public class ServicesComment {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return resultOK;
     }
+        
+         
+    public ArrayList<Comment> parseCmts(String jsonText)
+    {
+        try {
+            Comment = new ArrayList<>();
+            JSONParser j = new JSONParser();
+            
+            Map<String,Object> actsListJason = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
+            
+            List<Map<String,Object>> list = (List<Map<String,Object>>)actsListJason.get("root");
+             for(Map<String,Object> obj : list)
+            {
+                Comment.add(new Comment(obj.get("id").toString().substring(0,obj.get("id").toString().length()-2),obj.get("id_u").toString(),obj.get("text").toString(),
+                       obj.get("date").toString(),obj.get("UserName").toString(),obj.get("UserPhoto").toString(),obj.get("NbrCmt").toString() ));
+            }
+        } catch (IOException ex) {
+        }
+        return Comment;
+    }
+    
+    
+    public ArrayList<Comment> getAllComment(String id)
+    {
+        String url = Statics.BASE_URL+"/ListCommentMobile/"+id;
+        req.setUrl(url);
+        req.setPost(false);
+        InfiniteProgress prog = new InfiniteProgress();
+        Dialog d = prog.showInfiniteBlocking();
+        req.setDisposeOnCompletion(d);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+           
+                Comment= parseCmts(new String(req.getResponseData()));
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return Comment;
+    }
+    
 }
