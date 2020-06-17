@@ -12,18 +12,35 @@ package com.mycompany.myapp.entities;
 public class news {
     
     private int id_news;
-    private String titre,desc,image;
+    private String titre,descr,image,introduction;
 
-    public news(int id_news, String titre, String desc, String image) {
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+     int nombreComment;
+    public int getNombreComment() {
+        return nombreComment;
+    }
+
+    public void setNombreComment(int nombreComment) {
+        this.nombreComment = nombreComment;
+    }
+    public news() {}
+
+    public news(int id_news, String titre, String descr, String image) {
         this.id_news = id_news;
         this.titre = titre;
-        this.desc = desc;
+        this.descr = descr;
         this.image = image;
     }
 
-    public news(String titre, String desc, String image) {
+    public news(String titre, String descr, String image) {
         this.titre = titre;
-        this.desc = desc;
+        this.descr = descr;
         this.image = image;
     }
 
@@ -35,8 +52,8 @@ public class news {
         return titre;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescr() {
+        return descr;
     }
 
     public String getImage() {
@@ -51,8 +68,8 @@ public class news {
         this.titre = titre;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescr(String descr) {
+        this.descr = descr;
     }
 
     public void setImage(String image) {
@@ -61,7 +78,7 @@ public class news {
 
     @Override
     public String toString() {
-        return "news{" + "id_news=" + id_news + ", titre=" + titre + ", desc=" + desc + ", image=" + image + '}';
+        return "news{" + "id_news=" + id_news + ", titre=" + titre + ", descr=" + descr + ", image=" + image + '}';
     }
     
     

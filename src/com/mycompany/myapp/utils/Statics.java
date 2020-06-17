@@ -10,6 +10,7 @@ package com.mycompany.myapp.utils;
  * @author jawha
  */
 public class Statics {
+
     public static final String BASE_URL="http://localhost/PI_Webwassalni/web/app_dev.php";
     
     
