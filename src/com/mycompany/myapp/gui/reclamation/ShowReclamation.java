@@ -227,10 +227,7 @@ accueilf.getToolbar().addSearchCommand(e -> {
             } catch (IOException ex) {
                 System.out.println("err");            }
         });
-             getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, e->{
-                Accueil a = new Accueil(saif);
-                    a.show();
-                        });
+             getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, e->previous.show());
    
     }
     public void refreshForm() {

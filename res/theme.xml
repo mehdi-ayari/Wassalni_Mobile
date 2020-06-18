@@ -63,9 +63,6 @@
     <image name="switch_off.png" type="multi"  />
     <image name="switch_on.png" type="multi"  />
     <theme name="Theme">
-        <val key="@includeNativeBool" value="true" />
-    </theme>
-    <theme name="Theme 1">
         <val key="@PopupDialogArrowBool" value="false" />
         <val key="@calTitleDayStyleBool" value="true" />
         <val key="@calTransitionVertBool" value="false" />

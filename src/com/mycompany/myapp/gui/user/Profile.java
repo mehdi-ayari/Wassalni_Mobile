@@ -13,9 +13,19 @@ import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.Style;
+import com.codename1.ui.util.Resources;
 import com.mycompany.myapp.entities.reservation;
 import com.mycompany.myapp.entities.user;
+import com.mycompany.myapp.gui.Reservation.AddBusinessForm;
 import com.mycompany.myapp.gui.Reservation.AddReservationForm;
+import com.mycompany.myapp.gui.Reservation.ListBusinessForm;
+import com.mycompany.myapp.gui.Reservation.ListReservationForm;
+import com.mycompany.myapp.gui.reclamation.AddRec;
+import com.mycompany.myapp.gui.reclamation.ShowReclamation;
+import com.mycompany.myapp.gui.voyage.AddRecVoyage;
+import com.mycompany.myapp.gui.voyage.ListRecVoy;
+import com.mycompany.myapp.gui.voyage.ListVoyagesForm;
+import com.news.gui.NewsClient;
 //import com.mycompany.myapp.gui.StockHomeForm;
 //import com.mycompany.myapp.gui.commande.CommandeForm;
 //import com.mycompany.myapp.gui.gererentrepot.EntrepotALouerForm;
@@ -33,6 +43,7 @@ import java.io.IOException;
 public class Profile extends Form {
    
     Form profile;
+
     public Profile (user u){
    
         profile = this;
@@ -80,9 +91,48 @@ public class Profile extends Form {
          addAll(usernameL,nomL,prenomL,emailL,telL);
           
          if(u.getRole_user().equals("client")){
-              getToolbar().addCommandToLeftSideMenu("commande",  null , (evt) -> {
+              getToolbar().addCommandToLeftSideMenu("Add Reservation",  null , (evt) -> {
           
            new AddReservationForm(profile).show();
+        
+       });  
+              getToolbar().addCommandToLeftSideMenu("List Reservation",  null , (evt) -> {
+          
+           new ListReservationForm(profile).show();
+        
+       });  
+              
+                getToolbar().addCommandToLeftSideMenu("List Reclamation Voyage",  null , (evt) -> {
+          
+           new ListRecVoy(profile).show();
+        
+       });  
+                 getToolbar().addCommandToLeftSideMenu("List Voyage",  null , (evt) -> {
+          
+           new ListVoyagesForm(profile).show();
+        
+       });  
+                   getToolbar().addCommandToLeftSideMenu("Show Reclamation",  null , (evt) -> {
+          
+           new ShowReclamation(profile).show();
+        
+       });  
+                    getToolbar().addCommandToLeftSideMenu("News",  null , (evt) -> {
+          
+           new NewsClient(profile, theme).show();
+        
+       });  
+              
+         } 
+         else if(u.getRole_user().equals("entreprise")){
+              getToolbar().addCommandToLeftSideMenu("Add Reservation Business",  null , (evt) -> {
+          
+           new AddBusinessForm(profile).show();
+        
+       });  
+               getToolbar().addCommandToLeftSideMenu("List Business",  null , (evt) -> {
+          
+           new ListBusinessForm(profile).show();
         
        });  
         
