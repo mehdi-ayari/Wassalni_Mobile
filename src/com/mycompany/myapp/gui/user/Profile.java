@@ -27,6 +27,7 @@ import com.mycompany.myapp.gui.voyage.AddRecVoyage;
 import com.mycompany.myapp.gui.voyage.ListRecVoy;
 import com.mycompany.myapp.gui.voyage.ListVoyagesForm;
 import com.news.gui.NewsClient;
+import com.news.gui.NewsEntreprise;
 //import com.mycompany.myapp.gui.StockHomeForm;
 //import com.mycompany.myapp.gui.commande.CommandeForm;
 //import com.mycompany.myapp.gui.gererentrepot.EntrepotALouerForm;
@@ -134,6 +135,11 @@ private Resources theme;
                getToolbar().addCommandToLeftSideMenu("List Business",  null , (evt) -> {
           
            new ListBusinessForm(profile).show();
+        
+       });  
+               getToolbar().addCommandToLeftSideMenu("List Business",  null , (evt) -> {
+          
+           new NewsEntreprise(profile,theme).show();
         
        });  
         
