@@ -5,6 +5,7 @@
  */
 package com.mycompany.myapp.gui.voyage;
 
+import com.codename1.notifications.LocalNotification;
 import com.codename1.ui.Button;
 import com.codename1.ui.Command;
 import com.codename1.ui.Dialog;
@@ -15,6 +16,7 @@ import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import com.mycompany.myapp.entities.reclamation_voyage;
+import com.mycompany.myapp.entities.voyage;
 import com.mycompany.myapp.services.voyage.serviceRecVoyage;
 
 /**
@@ -22,8 +24,9 @@ import com.mycompany.myapp.services.voyage.serviceRecVoyage;
  * @author jawha
  */
 public class AddRecVoyage extends Form {
+    int badgeNumber = 0;
 
-    public AddRecVoyage(Form previous) {
+    public AddRecVoyage(Form previous,voyage v) {
         setTitle("Add new Reclamation");
         setLayout(BoxLayout.y());
         
@@ -37,8 +40,13 @@ public class AddRecVoyage extends Form {
                     Dialog.show("Alert", "Please fill all the fields", new Command("OK"));
                 else{
                         reclamation_voyage Rec = new reclamation_voyage(tfTitre.getText(), tfCommentaire.getText());
-                        if(new serviceRecVoyage().addTask(Rec))
-                            Dialog.show("Success", "connection accepted", new Command("OK"));
+                        if(new serviceRecVoyage().addTask(Rec,v.getId_voyage()))
+                        { Dialog.show("Success", "connection accepted", new Command("OK"));
+                            LocalNotification n = new LocalNotification();
+                            n.setAlertBody("Reclamation added");
+                            n.setAlertTitle("Reclamation");
+                            n.setId(Rec.getTitre());
+                            n.setBadgeNumber(badgeNumber++);}
                         else
                             Dialog.show("Error", "connection denied", new Command("OK"));
 

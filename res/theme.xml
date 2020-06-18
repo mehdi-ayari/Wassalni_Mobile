@@ -4,6 +4,7 @@
     <image name="back_center.png" type="multi"  />
     <image name="back_left.png" type="multi"  />
     <image name="back_right.png" type="multi"  />
+    <image name="blue_pin.png"  />
     <image name="Button.borderBottom_1.png" type="multi"  />
     <image name="Button.borderBottomL_1.png" type="multi"  />
     <image name="Button.borderBottomR_1.png" type="multi"  />
@@ -117,8 +118,8 @@
             <entry key="Calendar.Thursday" value="Thu" />
             <entry key="ok" value="OK" />
             <entry key="Calendar.Saturday" value="Sat" />
-            <entry key="select" value="Select" />
             <entry key="Calendar.Friday" value="Fri" />
+            <entry key="select" value="Select" />
             <entry key="edit" value="Edit" />
             <entry key="Calendar.Monday" value="Mon" />
             <entry key="cancel" value="Cancel" />
@@ -153,6 +154,7 @@
     <image name="MultiButton.borderTopL_1.png" type="multi"  />
     <image name="MultiButton.borderTopR_1.png" type="multi"  />
     <image name="navbar@2x.png" type="multi"  />
+    <image name="red_pin.png"  />
     <image name="Slider.borderBottom_2.png" type="multi"  />
     <image name="Slider.borderBottomL_2.png" type="multi"  />
     <image name="Slider.borderBottomR_2.png" type="multi"  />

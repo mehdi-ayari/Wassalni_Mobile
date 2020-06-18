@@ -41,7 +41,8 @@ Form current;
         s.setText(serviceVoyage.getInstance().getVoyagesDone().toString());
         ArrayList<voyage> VoyagesD = serviceVoyage.getInstance().getVoyagesDone();
         ArrayList<voyage> Voyages = serviceVoyage.getInstance().getVoyages();
-        for(int i = 0 ; i < VoyagesD.size();i++){
+        try {
+                    for(int i = 0 ; i < VoyagesD.size();i++){
             voyage Voyage = VoyagesD.get(i);
             Label id = new Label();
             Label idRes = new Label();
@@ -59,15 +60,19 @@ Form current;
                 Reclamer.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent evt) {
-                new AddRecVoyage(current).show();
+                new AddRecVoyage(current,Voyage).show();
                 }
             });
                 
                 addAll(id,destination,idRes,dateVoyage,distance,Reclamer,tre);
            
         }
-        
-        for(int i = 0 ; i < Voyages.size();i++){
+            
+        } catch (NullPointerException e) {
+        }
+
+        try {
+            for(int i = 0 ; i < Voyages.size();i++){
             voyage Voyage = Voyages.get(i);
             Label id = new Label();
             Label idRes = new Label();
@@ -83,11 +88,14 @@ Form current;
                 
                 Button Map = new Button("Map");
                 
-                Map.addActionListener(e-> new map().show());
+                Map.addActionListener(e-> new map(this).showMeOnMap(Voyage));
                 
                 addAll(id,destination,idRes,dateVoyage,distance,Map,tre);
            
         }
+        } catch (NullPointerException e) {
+        }
+        
         
         getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK,e->previous.showBack());
     }

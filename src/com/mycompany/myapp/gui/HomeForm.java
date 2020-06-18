@@ -34,6 +34,7 @@ Form current;
         btnListRecVoyage.addActionListener(e-> new ListRecVoy(current).show());
         btnListVoyage.addActionListener(e-> new ListVoyagesForm(current).show());
         addAll(btnListVoyage,btnListRecVoyage);
+        
 
 
     }

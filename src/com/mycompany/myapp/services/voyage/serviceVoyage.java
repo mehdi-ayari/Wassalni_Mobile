@@ -69,7 +69,7 @@ public class serviceVoyage {
                 Map<String,Object> R = (Map<String,Object>) obj.get("reservationRes");
                 Map<String,Object> D = (Map<String,Object>) obj.get("dateVoyage");
                 float timestamp = Float.parseFloat(D.get("timestamp").toString());
-                float idRes = Float.parseFloat(R.get("idRes").toString());
+                float idRes = Float.parseFloat(R.get("id").toString());
                 String Date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date((int)timestamp * 1000L));
                 Date dateVoyage= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(Date);
                 String destination = R.get("destination").toString();
@@ -86,7 +86,7 @@ public class serviceVoyage {
     }
     
     public ArrayList<voyage> getVoyagesDone(){
-        String url2 = Statics.BASE_URL+"Voyage/voyage/findDone";
+        String url2 = Statics.BASE_URL2+"Voyage/voyage/findDone";
         req.setUrl(url2);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -101,7 +101,7 @@ public class serviceVoyage {
     }
     
     public ArrayList<voyage> getVoyages(){
-        String url2 = Statics.BASE_URL+"Voyage/voyage/find";
+        String url2 = Statics.BASE_URL2+"Voyage/voyage/find";
         req.setUrl(url2);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {

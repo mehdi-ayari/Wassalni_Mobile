@@ -68,7 +68,7 @@ public class serviceRecVoyage {
     }
     
     public ArrayList<reclamation_voyage> getAllRecVoy(){
-        String url = Statics.BASE_URL+"Voyage/reclamationvoyage/all";
+        String url = Statics.BASE_URL2+"Voyage/reclamationvoyage/all";
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -84,8 +84,8 @@ public class serviceRecVoyage {
     
     
     
-    public boolean addTask(reclamation_voyage t){
-        String url = Statics.BASE_URL+"Voyage/reclamationvoyage/"+"12"+"/add?titre="+t.getTitre()+"&commentaire="+t.getCommentaire();
+    public boolean addTask(reclamation_voyage t,int id){
+        String url = Statics.BASE_URL2+"Voyage/reclamationvoyage/"+id+"/add?titre="+t.getTitre()+"&commentaire="+t.getCommentaire();
         req.setUrl(url);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
@@ -97,6 +97,34 @@ public class serviceRecVoyage {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return resultOK;
     
+    }
+    
+    public boolean modifierReclamationV(int id, reclamation_voyage e) {
+    String url = Statics.BASE_URL2 + "Voyage/reclamationvoyage/"+id+"/modif?titre="+e.getTitre()+"&commentaire="+e.getCommentaire()    ;
+      req.setUrl(url);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return resultOK;
+    }
+    
+    public boolean suppReclamationV(int id) {
+    String url = Statics.BASE_URL2 + "Voyage/reclamationvoyage/"+id+"/del"    ;
+      req.setUrl(url);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return resultOK;
     }
     
 }
