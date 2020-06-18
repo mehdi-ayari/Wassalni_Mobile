@@ -13,6 +13,7 @@ import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.Style;
+import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
 import com.mycompany.myapp.entities.reservation;
 import com.mycompany.myapp.entities.user;
@@ -43,7 +44,7 @@ import java.io.IOException;
 public class Profile extends Form {
    
     Form profile;
-
+private Resources theme;
     public Profile (user u){
    
         profile = this;
@@ -51,7 +52,7 @@ public class Profile extends Form {
         setLayout(BoxLayout.y());
          Style loginStyle = getAllStyles();
         loginStyle.setBgColor(0xDCDCDC);
-        
+        theme = UIManager.initFirstTheme("/theme");
         //***********************  LOGO
         
 //        ImageViewer  Logo = null ;
