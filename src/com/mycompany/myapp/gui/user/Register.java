@@ -129,9 +129,9 @@ public class Register extends Form {
         
         //*************************** Role
                 ComboBox role = new ComboBox();
-                role.addItem("Fournisseur");
-                role.addItem("Client");
-                role.addItem("Transporteur");
+                role.addItem("client");
+                role.addItem("entreprise");
+               // role.addItem("Transporteur");
                 
         Style roleStyle = role.getAllStyles();
         roleStyle.setBorder(RoundRectBorder.create().
