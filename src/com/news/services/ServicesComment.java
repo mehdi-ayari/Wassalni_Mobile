@@ -126,11 +126,12 @@ public class ServicesComment {
     }
     
     
-    public ArrayList<Comment> getAllComment(int id)
+    public ArrayList<Comment> getAllComment(String id)
     {
-        String url = Statics.BASE_URL+"/ListCommentMobile/"+id;
+        String url = Statics.BASE_URL+"news/ListCommentMobile/"+id;
         req.setUrl(url);
         req.setPost(false);
+        System.out.println(url);
         InfiniteProgress prog = new InfiniteProgress();
         Dialog d = prog.showInfiniteBlocking();
         req.setDisposeOnCompletion(d);

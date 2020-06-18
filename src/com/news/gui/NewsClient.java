@@ -31,6 +31,8 @@ import com.news.services.ServicesNews;
 import com.news.services.ServicesComment;
 import com.mycompany.myapp.entities.Comment;
 import com.mycompany.myapp.utils.Statics;
+import java.io.IOException;
+
 import java.util.ArrayList;
 
 /**
@@ -88,7 +90,7 @@ public class NewsClient extends Form {
     
     }
      public Form NewsDetail(news c, Resources theme) {
-
+// win ta3ytelha fnct get all comments
         Form NewsDetail = new Form(c.getTitre(), BoxLayout.y());
 
         placeHolder = EncodedImage.createFromImage(theme.getImage("load.png"), false);
@@ -116,6 +118,83 @@ public class NewsClient extends Form {
         Container.addAll(Titre, DescrField, List);
         NewsDetail.add(img);
         NewsDetail.add(Container);
+               
+        for (Comment cmts : ServicesComment.getInstance().getAllComment(String.valueOf(c.getId_news()))) {
+         Container InfoContainer = new Container(BoxLayout.y());
+           
+            Label username = new Label(cmts.getUserName());
+            Label comment = new Label(cmts.getText());
+        
+            InfoContainer.add(username);
+            InfoContainer.add(comment);
+    
+            Container ContainerImage = new Container(BoxLayout.x());
+
+           // placeHolder = EncodedImage.createFromImage(theme.getImage("load.png"), false);
+            String url2 = "http://localhost/myproject/web/images/" + cmts.getUserPhoto();
+            ConnectionRequest connection2 = new ConnectionRequest();
+            connection2.setUrl(url2);
+            URLImage imgurl2 = URLImage.createToStorage(placeHolder, url2, url2);
+
+            ImageViewer img2 = new ImageViewer(imgurl2.scaled(imgurl2.getWidth() * 1, imgurl2.getHeight() * 1));
+            ContainerImage.add(img2);
+            ContainerImage.add(InfoContainer);
+            NewsDetail.add(ContainerImage);
+                }
+
+
+        /*
+        ArrayList<Comment> cmts = ServicesComment.getInstance().getAllComment(String.valueOf(c.getId_news()));
+      
+        if(cmts.size() !=0) {Label NbrComt = new Label("Comment("+cmts.get(0).getNbrCmt()+")"); add(NbrComt);}
+        
+        else {Label NbrComt = new Label("Comment(0)"); add(NbrComt);}
+       
+        
+        
+         for(int i=0 ; i<cmts.size();i++)
+         {
+              System.out.println(cmts.get(i));
+           EncodedImage enc;
+           enc=  EncodedImage.createFromImage(theme.getImage("load.png"), false); 
+         
+          String urll = "http://localhost/myproject/web/images/" + cmts.get(i).getUserPhoto();
+           Image imgg= URLImage.createToStorage(enc, urll, urll, URLImage.RESIZE_SCALE);
+           ImageViewer   imgv=new ImageViewer(imgg);
+           
+           //cmts.get(i).setIdA(String.valueOf(c.getId_news()));
+           
+           SpanLabel UserName= new SpanLabel();
+           UserName.setText(cmts.get(i).getUserName());
+           
+           Container c1 = new Container(BoxLayout.x());
+           c1.addAll(imgv,UserName);
+           
+          
+           SpanLabel text= new SpanLabel();
+           text.setText(cmts.get(i).getText());
+           
+            Container c2 = new Container(BoxLayout.x());
+            SpanLabel dateC= new SpanLabel();
+           dateC.setText(cmts.get(i).getDate()); 
+           
+           c2.addAll(dateC);
+           
+           Container cn = new Container(BoxLayout.y());
+           
+           cn.addAll(c1,text,c2);
+           
+           Label choix = new Label();
+           cn.add(choix);
+           cn.setLeadComponent(choix);
+           add(cn); // yodhreli lzem ta3mel  newsdetail.add(cn) // ey ta felil nzid nhot lbkia wnbar9ach
+           Comment cmt = cmts.get(i);
+                 
+         }
+         */
+         
+                   //  if(User.getId()==)
+
         
         Container ButtonsContainer = new Container(new FlowLayout(CENTER));
 
