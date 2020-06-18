@@ -16,6 +16,7 @@ public class voyage {
     private int id_voyage, reservation_id_res;
     private float distance;
     private Date date_voyage;
+    private String destination;
 
     public voyage(int id_voyage, int reservation_id_res, float distance, Date date_voyage) {
         this.id_voyage = id_voyage;
@@ -30,8 +31,19 @@ public class voyage {
         this.date_voyage = date_voyage;
     }
 
+    public voyage() {
+    }
+
     public int getId_voyage() {
         return id_voyage;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public String getDestination() {
+        return destination;
     }
 
     public int getReservation_id_res() {

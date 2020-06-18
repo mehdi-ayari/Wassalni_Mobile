@@ -12,6 +12,7 @@ package com.mycompany.myapp.utils;
 public class Statics {
 
     public static final String BASE_URL="http://localhost/PI_Webwassalni/web/app_dev.php";
+    public static final String BASE_URL2="http://localhost/PI_WebWassalni/web/app_dev.php/";
     
     
 }

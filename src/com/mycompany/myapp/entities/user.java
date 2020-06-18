@@ -12,6 +12,12 @@ package com.mycompany.myapp.entities;
 
 
 public class user {
+
+
+    public user() {
+    }
+   
+
     
     private int id,telephone,nbr_emp;
     private String username,username_canonical,
