@@ -14,8 +14,7 @@ package com.mycompany.myapp.entities;
 public class user {
 
 
-    public user() {
-    }
+   
    
 
     

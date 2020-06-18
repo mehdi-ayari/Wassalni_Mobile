@@ -16,7 +16,7 @@ import com.codename1.io.NetworkEvent;
 import com.mycompany.myapp.gui.Reservation.HomeForm;
 
 import com.mycompany.myapp.entities.user;
-import com.mycompany.myapp.gui.HomeForm;
+
 import static jdk.nashorn.internal.objects.NativeRegExp.compile;
 import java.lang.String;
 
