@@ -145,16 +145,16 @@ public class Register extends Form {
       
         //*************************** CIN
         
-                TextField cin = new TextField("", "CIN");
-        Style cinStyle = cin.getAllStyles();
-        cinStyle.setBorder(RoundRectBorder.create().
-                strokeColor(0).
-                strokeOpacity(120).
-                stroke(borderStroke));
-        cinStyle.setBgColor(0xffffff);
-        cinStyle.setBgTransparency(255);
-        cinStyle.setMarginUnit(Style.UNIT_TYPE_DIPS);
-        
+//                TextField cin = new TextField("", "CIN");
+//        Style cinStyle = cin.getAllStyles();
+//        cinStyle.setBorder(RoundRectBorder.create().
+//                strokeColor(0).
+//                strokeOpacity(120).
+//                stroke(borderStroke));
+//        cinStyle.setBgColor(0xffffff);
+//        cinStyle.setBgTransparency(255);
+//        cinStyle.setMarginUnit(Style.UNIT_TYPE_DIPS);
+//        
       
         //******************************* TEL
         
@@ -210,7 +210,7 @@ public class Register extends Form {
         cnt4.add(email);
         cnt5.add(password);
         cnt6.add(role);
-        cnt7.add(cin);
+        //cnt7.add(cin);
         cnt8.add(tel);
         cnt9.add(valider);
         cnt10.add(deja);
@@ -241,7 +241,7 @@ public class Register extends Form {
             public void actionPerformed(ActionEvent evt) {
                 if ((Username.getText().length()==0)||(nom.getText().length()==0)||(prenom.getText().length()==0)
                         ||(email.getText().length()==0)||(password.getText().length()==0)||
-                        (tel.getText().length()==0)||(cin.getText().length()==0)
+                        (tel.getText().length()==0)
                         )
                 { Dialog.show("Alert", "Please fill all the fields", new Command("OK"));}
              else {  if(UserService.getInstance().usernameExists(Username.getText())) {
