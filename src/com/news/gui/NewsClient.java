@@ -90,7 +90,7 @@ public class NewsClient extends Form {
     
     }
      public Form NewsDetail(news c, Resources theme) {
-// win ta3ytelha fnct get all comments
+
         Form NewsDetail = new Form(c.getTitre(), BoxLayout.y());
 
         placeHolder = EncodedImage.createFromImage(theme.getImage("load.png"), false);
@@ -119,11 +119,12 @@ public class NewsClient extends Form {
         NewsDetail.add(img);
         NewsDetail.add(Container);
                
-        for (Comment cmts : ServicesComment.getInstance().getAllComment(String.valueOf(c.getId_news()))) {
+      /* for (Comment cmts : ServicesComment.getInstance().getAllComment(String.valueOf(c.getId_news()))) {
          Container InfoContainer = new Container(BoxLayout.y());
-           
+         
+          
             Label username = new Label(cmts.getUserName());
-            Label comment = new Label(cmts.getText());
+            SpanLabel comment = new SpanLabel(cmts.getText());
         
             InfoContainer.add(username);
             InfoContainer.add(comment);
@@ -142,8 +143,8 @@ public class NewsClient extends Form {
             NewsDetail.add(ContainerImage);
                 }
 
-
-        /*
+*/
+        
         ArrayList<Comment> cmts = ServicesComment.getInstance().getAllComment(String.valueOf(c.getId_news()));
       
         if(cmts.size() !=0) {Label NbrComt = new Label("Comment("+cmts.get(0).getNbrCmt()+")"); add(NbrComt);}
@@ -162,7 +163,7 @@ public class NewsClient extends Form {
            Image imgg= URLImage.createToStorage(enc, urll, urll, URLImage.RESIZE_SCALE);
            ImageViewer   imgv=new ImageViewer(imgg);
            
-           //cmts.get(i).setIdA(String.valueOf(c.getId_news()));
+           cmts.get(i).setIdA(String.valueOf(c.getId_news()));
            
            SpanLabel UserName= new SpanLabel();
            UserName.setText(cmts.get(i).getUserName());
@@ -187,11 +188,11 @@ public class NewsClient extends Form {
            Label choix = new Label();
            cn.add(choix);
            cn.setLeadComponent(choix);
-           add(cn); // yodhreli lzem ta3mel  newsdetail.add(cn) // ey ta felil nzid nhot lbkia wnbar9ach
+           NewsDetail.add(cn); // 
            Comment cmt = cmts.get(i);
                  
          }
-         */
+         
          
                    //  if(User.getId()==)
 
@@ -210,13 +211,14 @@ public class NewsClient extends Form {
             } else {
                 try {
                     Comment cm = new Comment();
-
+                    cm.setId_u(String.valueOf(User.getId()));
+                    cm.setIdA(String.valueOf(c.getId_news()));
                     cm.setText(TitreField.getText());
                  
 
                     if (ServicesComment.getInstance().AddComment(cm)) {
                         Dialog.show("Success", "COMMENT Added", new Command("OK"));
-                        new NewsEntreprise(Entreprise.current, theme).show();
+                        new NewsClient(Client.current, theme).show();
                     } else {
                         Dialog.show("ERROR", "Server error", new Command("OK"));
                     }

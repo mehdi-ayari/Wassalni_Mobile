@@ -5,7 +5,6 @@
  */
 package com.news.services;
 
-//import edu.gestudent.utils.DataBase;
 
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
@@ -18,11 +17,10 @@ import com.mycompany.myapp.entities.user;
 import java.io.IOException;
 import java.util.Map;
 
-//import java.sql.Connection;
-//import java.sql.Statement;
+
 /**
  *
- * @author Ayadi
+ * @author ASUS
  */
 public class ServicesUsers {
 
