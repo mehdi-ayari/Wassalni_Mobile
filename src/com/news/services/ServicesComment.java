@@ -64,48 +64,7 @@ public class ServicesComment {
         return resultOK;
     }
      
-     public String DeleteComment(Comment c) {
-        String url = Statics.BASE_URL + "news/deleteCommentMobile/?id=" + c.getId();
-        req.setUrl(url);// Insertion de l'URL de notre demande de connexion
-        System.out.println(url);
-
-        req.addResponseListener(new ActionListener<NetworkEvent>() {
-            @Override
-            public void actionPerformed(NetworkEvent evt) {
-
-                try {
-                    String data = new String(req.getResponseData());
-                    JSONParser j = new JSONParser();
-                    Map<String, Object> tasksListJson;
-                    tasksListJson = j.parseJSON(new CharArrayReader(data.toCharArray()));
-                    result = (String) tasksListJson.get("body");
-
-                } catch (IOException ex) {
-                    ex.getMessage();
-                }
-                req.removeResponseListener(this);
-
-            }
-        });
-        NetworkManager.getInstance().addToQueueAndWait(req);
-        return result;
-    }
-        public boolean EditComment(Comment c) {
-        String url = Statics.BASE_URL + "news/EditCommentMobile/?id=" + c.getIdA()+ "text=" + c.getText(); //création de l'URL
-        System.out.println(url);
-        req.setUrl(url);// Insertion de l'URL de notre demande de connexion
-        req.addResponseListener(new ActionListener<NetworkEvent>() {
-            @Override
-            public void actionPerformed(NetworkEvent evt) {
-                resultOK = req.getResponseCode() == 200;
-                req.removeResponseListener(this);
-            }
-        });
-        NetworkManager.getInstance().addToQueueAndWait(req);
-        return resultOK;
-    }
-        
-         
+    
     public ArrayList<Comment> parseCmts(String jsonText)
     {
         try {

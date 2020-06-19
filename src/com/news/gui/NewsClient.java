@@ -102,7 +102,6 @@ public class NewsClient extends Form {
         ImageViewer img = new ImageViewer(imgurl.scaled(imgurl.getWidth() * 1, imgurl.getHeight() * 1));
 
         Label Titre = new Label();
-        Label List = new Label("See Comments on this NEWS");
         TextField DescrField = new TextField(null, "Description");
 
 
@@ -115,7 +114,7 @@ public class NewsClient extends Form {
 
         Container Container = new Container(new FlowLayout(CENTER));
      
-        Container.addAll(Titre, DescrField, List);
+        Container.addAll(Titre, DescrField);
         NewsDetail.add(img);
         NewsDetail.add(Container);
                
@@ -147,9 +146,9 @@ public class NewsClient extends Form {
         
         ArrayList<Comment> cmts = ServicesComment.getInstance().getAllComment(String.valueOf(c.getId_news()));
       
-        if(cmts.size() !=0) {Label NbrComt = new Label("Comment("+cmts.get(0).getNbrCmt()+")"); add(NbrComt);}
+        if(cmts.size() !=0) {Label NbrComt = new Label("Comment("+cmts.get(0).getNbrCmt()+")"); NewsDetail.add(NbrComt);}
         
-        else {Label NbrComt = new Label("Comment(0)"); add(NbrComt);}
+        else {Label NbrComt = new Label("Comment(0)"); NewsDetail.add(NbrComt);}
        
         
         
