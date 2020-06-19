@@ -77,6 +77,14 @@ public class ReclamationService {
             Map<String, Object> tasksListJson = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
             List<Map<String, Object>> list = (List<Map<String, Object>>) tasksListJson.get("root");
 
+            
+            
+            
+//            Map<String, Object> dateJson1 = (Map<String, Object>) obj.get("date");
+//                float dateFloat1 = Float.parseFloat(dateJson1.get("timestamp").toString());
+//                Date daterec = new Date((long) dateFloat1 * 1000);
+//                t.setDat(daterec);
+            
             //Parcourir la liste des tâches Json
             for (Map<String, Object> obj : list) {
                 //Création des tâches et récupération de leurs données
@@ -105,38 +113,7 @@ public class ReclamationService {
         return reclamations;
     }
     
-    public ArrayList<TypeRec> parseTypes(){
-        types = new ArrayList<>();
-        ConnectionRequest connectionRequest = new ConnectionRequest() {
-            @Override
-            protected void readResponse(InputStream in) throws IOException {
-
-                JSONParser json = new JSONParser();
-                try {
-                    Reader reader = new InputStreamReader(in, "UTF-8");
-
-                    Map<String, Object> data = json.parseJSON(reader);
-                    List<Map<String, Object>> content = (List<Map<String, Object>>) data.get("root");
-                    if ( types.size() > 0) {
-                        types.clear();
-                  }
-                    Log.p("size content" + content.size());
-                    for (Map<String, Object> obj : content) {
-                        TypeRec t = new TypeRec();
-                        t.setId(Integer.parseInt(obj.get("id").toString()));
-                        t.setType((String) obj.get("type"));
-                        types.add(t);
-                    }
-                } catch (IOException err) {
-                    Log.e(err);
-                }
-            }
-        };
-        connectionRequest.setUrl("http://192.168.93.1/rimehService/MalekService/allProd.php");
-        NetworkManager.getInstance().addToQueue(connectionRequest);
-        return types;
-    }
-    
+   
     
     public ArrayList<TypeRec> getAllTypes() {
         String url = "http://localhost/PI_WebWassalni/web/app_dev.php/Reclamation/listTypes";

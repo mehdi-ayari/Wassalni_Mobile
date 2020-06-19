@@ -27,7 +27,7 @@ import java.io.IOException;
 
 /**
  *
- * @author ASUS
+ * @author Lenovo
  */
 public class Accueil extends Form{
     Form accueill;

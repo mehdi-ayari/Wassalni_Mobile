@@ -37,7 +37,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author admin
+ * @author Lenovo
  */
 public class ShowReclamation  extends Form{
 

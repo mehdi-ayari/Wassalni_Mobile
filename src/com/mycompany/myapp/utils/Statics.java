@@ -7,7 +7,7 @@ package com.mycompany.myapp.utils;
 
 /**
  *
- * @author jawha
+ * @author LENOVO
  */
 public class Statics {
     public static final String BASE_URL="http://41.226.11.252:11300";
